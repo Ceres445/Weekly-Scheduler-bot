@@ -1,0 +1,11 @@
+{
+  "day_name":  ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"],
+  "links"     : {
+              "chem": "https://us02web.zoom.us/j/86954810954?pwd=UXAremM1UCtQaGl5SEdRazVIWjJsUT09",
+              "phy_": "https://us02web.zoom.us/j/88129691783?pwd=Q2ZmODhwT3BSaE9LdFBzZVAxVUlMQT09",
+              "math": "https://us02web.zoom.us/j/83860068813?pwd=UzFuWmgrSnlxRCtaZEllL0ZzTjV3Zz09",
+              "eng_": "https://meet.google.com/aon-pmkv-gmd",
+              "comp": "https://meet.google.com/zbc-gjie-nxi"
+                }
+
+}
