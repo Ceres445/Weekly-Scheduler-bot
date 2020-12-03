@@ -1,10 +1,25 @@
-import discord
-from discord.ext import commands
-from aiohttp import ClientSession
-import datetime
 import asyncio
+import datetime
+import os
+
+import discord
+from aiohttp import ClientSession
+from discord.ext import commands
+from dotenv import load_dotenv
 
 from cogs.utils.database import Database
+
+try:
+    postgres = os.environ['DATABASE_URL']
+    token = os.environ['TOKEN']
+    print(os.environ['TZ'])
+    print("time is ", datetime.datetime.now())
+    print('loaded heroku env variables')
+except KeyError:
+    load_dotenv()
+    print('loaded local dotenv file')
+    postgres = os.environ['POSTGRES']
+    token = os.environ['token']
 cogs = ["cogs.reminder"]
 
 
@@ -34,7 +49,7 @@ class Reminder(commands.Bot):
 
     async def on_connect(self):
         try:
-            self.db = await Database.create_pool(bot=self, uri="postgresql://localhost/reminder", loop=self.loop)
+            self.db = await Database.create_pool(bot=self, uri=os.environ["DATABASE_URL"], loop=self.loop)
         except OSError:
             print("postgres server is not running")
 
@@ -59,4 +74,4 @@ class Reminder(commands.Bot):
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(Reminder.setup("NzM1MDg0NTg0Mjc4MTYzNTU3.XxbG3g.EgXjEFq-_w_UwRPzUXh0YTM9NF0"))
+    loop.run_until_complete(Reminder.setup(token))
