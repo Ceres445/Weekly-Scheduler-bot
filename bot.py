@@ -9,12 +9,9 @@ from dotenv import load_dotenv
 
 from cogs.utils.database import Database
 
-print(os.environ['DATABASE_URL'])
-print(os.environ['TOKEN'])
 try:
     postgres = os.environ['DATABASE_URL']
     token = os.environ['TOKEN']
-    print(os.environ['TZ'])
     print("time is ", datetime.datetime.now())
     print('loaded heroku env variables')
 except KeyError:
