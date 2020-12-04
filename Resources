@@ -1,0 +1,2 @@
+https://gis.stackexchange.com/questions/113060/copy-tables-from-one-server-to-another-in-postgresql
+pg_dump -h localhost -t time_data reminder | psql -d d9qt7tf1liu2p3 -h ec2-52-44-139-108.compute-1.amazonaws.com --user nejunesztxrqdw
