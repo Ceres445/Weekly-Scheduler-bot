@@ -6,7 +6,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
-from .utils.functions import hour_rounder
+from utils.functions import hour_rounder
 
 
 class reminder(commands.Cog):
@@ -16,9 +16,11 @@ class reminder(commands.Cog):
                 open("cogs/json/time.json", "r") as f2:
             self.embeds = json.load(f)
             self.links = json.load(f2)['links']
+        self.channel = None
+        self.data = None
         self.remind.start()
 
-    @tasks.loop(minutes=15)
+    @tasks.loop(minutes=5)
     async def remind(self):
         print(datetime.now().strftime('%H:%M'))
         time = datetime.now().strftime('%H:%M')
