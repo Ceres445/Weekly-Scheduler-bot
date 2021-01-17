@@ -12,8 +12,8 @@ from .utils.functions import hour_rounder
 class reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("cogs/json/embeds.json", "r") as f, \
-                open("cogs/json/time.json", "r") as f2:
+        with open("cogs/json_files/embeds.json", "r") as f, \
+                open("cogs/json_files/time.json", "r") as f2:
             self.embeds = json.load(f)
             self.links = json.load(f2)['links']
         self.channel = None
