@@ -6,7 +6,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
-from utils.functions import hour_rounder
+from .utils.functions import hour_rounder
 
 
 class reminder(commands.Cog):
