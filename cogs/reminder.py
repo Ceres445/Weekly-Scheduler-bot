@@ -51,7 +51,7 @@ def embeds_class(self, today, author, typer):
         desc = ''
         for key, value in record.items():
             desc += str(key) + ': ' + str(value) + '\n'
-        embed.add_field(name=subject + 'class', value=desc)
+        embed.add_field(name=subject + ' class', value=desc, inline=False)
     embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
 
