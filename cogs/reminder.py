@@ -59,7 +59,7 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def next(self, ctx):
-        time = datetime.now().strftime('%H:%M')
+        time = datetime.now()
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
@@ -68,7 +68,7 @@ class reminder(commands.Cog):
         index = self.get_index(today_time, day, time)
         today = list(filter(lambda x: x['day'] == index[1], self.data))
         record = list(filter(lambda x: x['time'] == index[0], today))[0]
-        await ctx.send(embed = embed_class(record, ctx.author))
+        await ctx.send(embed=embed_class(record, ctx.author))
 
     def get_index(self, today_time, day, time):
         state = 0
