@@ -1,5 +1,6 @@
 import asyncio
 import json
+from datetime import datetime as dt, timedelta
 
 import discord
 from discord.ext import commands
@@ -7,6 +8,15 @@ from discord.ext import tasks
 from datetime import datetime
 
 from .utils.functions import hour_rounder
+
+
+def embed_class(record, author: discord.Member):
+    desc = ''
+    for key, value in record.items():
+        desc += key + ': ' + value
+    embed = discord.Embed(title=f"Class", description=desc)
+    embed.set_author(name=author.name, url=author.avatar_url)
+    return embed
 
 
 class reminder(commands.Cog):
@@ -44,6 +54,41 @@ class reminder(commands.Cog):
         print(datetime.now().strftime('%H:%M'), 2)
         self.data = await self.bot.db.get_data()
         await asyncio.sleep(hour_rounder())
+
+    @commands.command()
+    async def next(self, ctx):
+        time = datetime.now().strftime('%H:%M')
+        day = datetime.now().weekday()
+        today = list(filter(lambda x: x['day'] == day, self.data))
+        strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
+        today_time = [dt.now().replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
+        today_time = sorted(today_time)
+        index = self.get_index(today_time, day, time)
+        today = list(filter(lambda x: x['day'] == index[1], self.data))
+        record = list(filter(lambda x: x['time'] == index[0], today))[0]
+        await ctx.send(embed = embed_class(record, ctx.author))
+
+    def get_index(self, today_time, day, time):
+        state = 0
+        for i in today_time:
+            if i >= time:
+                index = today_time.index(i)
+                state = 1
+                break
+        if state:
+            return today_time[index].strftime('%H:%M'), day
+        else:
+            if day == 6:
+                day = 0
+            else:
+                day += 1
+            today = list(filter(lambda x: x['day'] == day, self.data))
+            strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
+            today_time = [dt.now().replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
+            today_time = sorted(today_time)
+            time = time + timedelta(hours=24)
+            time.replace(hour=0, minute=0, second=0, microsecond=0)
+            return self.get_index(today_time, day, time)
 
     @commands.command()
     async def embed(self, ctx, subject: str = "phy_"):
