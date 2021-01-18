@@ -41,8 +41,8 @@ class reminder(commands.Cog):
         with open("cogs/json_files/embeds.json", "r") as f, \
                 open("cogs/json_files/time.json", "r") as f2:
             self.embeds = json.load(f)
-            self.links = json.load(f2)['links']
             self.converter = json.load(f2)
+            self.links = self.converter['links']
         self.channel = None
         self.data = None
         self.remind.start()
