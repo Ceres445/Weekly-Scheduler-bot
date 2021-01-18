@@ -34,7 +34,9 @@ class reminder(commands.Cog):
     async def remind(self):
         print(datetime.now().strftime('%H:%M'))
         time = datetime.now().strftime('%H:%M')
-        day = datetime.now().day
+        day = datetime.now().weekday()
+        print(time, day, "is the time and day")
+        print([[x['day'], x['time']] for x in self.data])
         if [day, time] in [[x['day'], x['time']] for x in self.data]:
             record = self.data[[[x['day'], x['time']] for x in self.data].index([day, time])]
             await self.channel.send(content=f"<@&{self.embeds['roles'][record['subject']]}>",
@@ -50,9 +52,9 @@ class reminder(commands.Cog):
         await asyncio.sleep(3)
         self.channel = self.bot.guild.get_channel(698792545760706590)
         print(datetime.now().strftime('%H:%M'))
-        await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}")
-        print(datetime.now().strftime('%H:%M'), 2)
+        await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}.")
         self.data = await self.bot.db.get_data()
+        print([[x['day'], x['time']] for x in self.data], hour_rounder())
         await asyncio.sleep(hour_rounder())
 
     @commands.command()
