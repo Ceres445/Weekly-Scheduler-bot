@@ -22,7 +22,7 @@ def convert_record(self, record):
                 record[key] = 'Integrated'
             else:
                 record[key] = "CRP"
-        if key == 'permanent':
+        if key == 'permanant':
             record.pop(key)
     return record
 
