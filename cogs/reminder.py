@@ -90,6 +90,7 @@ class reminder(commands.Cog):
             today_time = sorted(today_time)
             time = time + timedelta(hours=24)
             time.replace(hour=0, minute=0, second=0, microsecond=0)
+            print(time, today_time)
             return self.get_index(today_time, day, time)
 
     @commands.command()
