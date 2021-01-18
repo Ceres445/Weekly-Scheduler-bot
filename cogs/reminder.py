@@ -31,7 +31,7 @@ def embed_class(self, record, author: discord.Member):
     for key, value in record.items():
         desc += str(key) + ': ' + str(value) + '\n'
     embed = discord.Embed(title=f"Class", description=desc)
-    embed.set_author(name=author.name, url=author.avatar_url)
+    embed.set_footer(text=f'Invoked by {author.display_name}', icon_url = author.avatar_url)
     return embed
 
 
@@ -110,6 +110,10 @@ class reminder(commands.Cog):
             today_time = sorted(today_time)
             print(time, today_time)
             return self.get_index(today_time, day, time)
+
+    @commands.command()
+    async def today(self, ctx):
+        pass
 
     @commands.command()
     async def embed(self, ctx, subject: str = "phy_"):
