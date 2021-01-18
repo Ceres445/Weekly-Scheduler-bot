@@ -11,6 +11,7 @@ from .utils.functions import hour_rounder
 
 
 def convert_record(self, record):
+    record = dict(record)
     for key, value in record.items():
         if key == 'day':
             record[key] = self.converter['day_name'][value]
