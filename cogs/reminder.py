@@ -42,7 +42,7 @@ class reminder(commands.Cog):
         await asyncio.sleep(3)
         self.channel = self.bot.guild.get_channel(698792545760706590)
         print(datetime.now().strftime('%H:%M'))
-        await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}")
+        await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}.")
         self.data = await self.bot.db.get_data()
         print([[x['day'], x['time']] for x in self.data], hour_rounder())
         await asyncio.sleep(hour_rounder())
