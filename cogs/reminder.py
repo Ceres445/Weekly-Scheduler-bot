@@ -25,6 +25,7 @@ class reminder(commands.Cog):
         print(datetime.now().strftime('%H:%M'))
         time = datetime.now().strftime('%H:%M')
         day = datetime.now().day
+        print(time, day)
         print([[x['day'], x['time']] for x in self.data])
         if [day, time] in [[x['day'], x['time']] for x in self.data]:
             record = self.data[[[x['day'], x['time']] for x in self.data].index([day, time])]
