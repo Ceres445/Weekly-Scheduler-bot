@@ -149,10 +149,13 @@ class reminder(commands.Cog):
         today = list(filter(lambda x: x['day'] == day, self.data))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
-    @commands.command(description="valid subjects are phy_, comp, che_, eng_, bio_, math")
+    @commands.command(description="valid subjects are phy, comp, che, eng, bio, math")
     async def embed(self, ctx, subject: str = "phy_"):
         """Shows the embed for any subject"""
-        await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
+        if len(subject) == 3:
+            await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject+ '_']))
+        else:
+            await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
 
 
 def setup(bot):
