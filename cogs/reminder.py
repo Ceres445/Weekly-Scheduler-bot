@@ -43,11 +43,12 @@ def embed_class(self, record, author: discord.Member):
 
 
 def embeds_class(self, today, author, typer):
-    embed = discord.Embed(title=f'Classes {typer}', timestamp=dt.now())
+    embed = discord.Embed(title=f"Classes {typer} on {self.converter['day_name'][today[0]['day']]}", timestamp=dt.now())
     for record in today:
         record = convert_record(self, record)
         subject = record['subject']
         record.pop('subject')
+        record.pop('day')
         desc = ''
         for key, value in record.items():
             desc += str(key) + ': ' + str(value) + '\n'
