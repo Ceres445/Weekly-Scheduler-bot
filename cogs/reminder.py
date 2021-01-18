@@ -42,6 +42,20 @@ def embed_class(self, record, author: discord.Member):
     return embed
 
 
+def embeds_class(self, today, author, typer):
+    embed = discord.Embed(title=f'Classes {typer}', timestamp=dt.now())
+    for record in today:
+        record = convert_record(self, record)
+        subject = record['subject']
+        record.pop('subject')
+        desc = ''
+        for key, value in record.items():
+            desc += str(key) + ': ' + str(value) + '\n'
+        embed.add_field(name=subject + 'class', value=desc)
+    embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
+    return embed
+
+
 class reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -120,7 +134,15 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def today(self, ctx):
-        pass
+        day = datetime.now().weekday()
+        today = list(filter(lambda x: x['day'] == day, self.data))
+        await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
+
+    @commands.command(aliases=['tmr'])
+    async def tomorrow(self, ctx):
+        day = (datetime.now() + timedelta(hours=24)).weekday()
+        today = list(filter(lambda x: x['day'] == day, self.data))
+        await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
     @commands.command()
     async def embed(self, ctx, subject: str = "phy_"):
