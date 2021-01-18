@@ -13,7 +13,7 @@ from .utils.functions import hour_rounder
 def embed_class(record, author: discord.Member):
     desc = ''
     for key, value in record.items():
-        desc += key + ': ' + value
+        desc += str(key) + ': ' + str(value)
     embed = discord.Embed(title=f"Class", description=desc)
     embed.set_author(name=author.name, url=author.avatar_url)
     return embed
