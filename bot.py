@@ -19,7 +19,7 @@ except KeyError:
     print('loaded local dotenv file')
     postgres = os.environ['POSTGRES']
     token = os.environ['token']
-cogs = ["cogs.reminder"]
+cogs = ["cogs.reminder", "cogs.help"]
 
 
 class Reminder(commands.Bot):
