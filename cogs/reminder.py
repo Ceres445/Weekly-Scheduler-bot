@@ -127,7 +127,7 @@ class reminder(commands.Cog):
             strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
 
             time = time + timedelta(hours=24)
-            time.replace(hour=0, minute=0, second=0, microsecond=0)
+            time = time.replace(hour=0, minute=0, second=0, microsecond=0)
             today_time = [time.replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
             today_time = sorted(today_time)
             print(time, today_time)
