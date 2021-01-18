@@ -161,7 +161,7 @@ class reminder(commands.Cog):
                 await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
         except KeyError:
             await ctx.send(f'<@339365580496830466> {ctx.author.mention} thats not a valid subject use '
-                           f'{self.bot.get_prefix}help embed for info')
+                           f'+help embed for info')
 
 
 def setup(bot):
