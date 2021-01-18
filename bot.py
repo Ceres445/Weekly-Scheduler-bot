@@ -58,8 +58,8 @@ class Reminder(commands.Bot):
         print(f'Successfully logged in as {self.user}\nSharded to {len(self.guilds)} guilds')
         await self.change_presence(status=discord.Status.online, activity=discord.Game(name='use the prefix "+"'))
 
-    # async def on_command_error(self, context, exception):
-    #     await self.log(content=f"error from {context.message.jump_url }\n {exception}")
+    async def on_command_error(self, context, exception):
+        await self.log(content=f"error from {context.message.jump_url }\n {exception}")
 
     @classmethod
     async def setup(cls, token):

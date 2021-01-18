@@ -43,7 +43,8 @@ def embed_class(self, record, author: discord.Member):
 
 
 def embeds_class(self, today, author, typer):
-    embed = discord.Embed(title=f"Classes {typer} on {self.converter['day_name'][today[0]['day']]}", timestamp=dt.utcnow())
+    embed = discord.Embed(title=f"Classes {typer} on {self.converter['day_name'][today[0]['day']]}",
+                          timestamp=dt.utcnow())
     for record in today:
         record = convert_record(self, record)
         subject = record['subject']
@@ -98,6 +99,7 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def next(self, ctx):
+        """Shows the next class that will happen"""
         time = datetime.now()
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
@@ -135,18 +137,21 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def today(self, ctx):
+        """Shows the classes that are happening today"""
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
 
     @commands.command(aliases=['tmr'])
     async def tomorrow(self, ctx):
+        """Shows the classes that will happen tomorrow"""
         day = (datetime.now() + timedelta(hours=24)).weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
-    @commands.command()
+    @commands.command(description="valid subjects are phy_, comp, che_, eng_, bio_, math")
     async def embed(self, ctx, subject: str = "phy_"):
+        """Shows the embed for any subject"""
         await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
 
 
