@@ -22,8 +22,7 @@ def convert_record(self, record):
                 record[key] = 'Integrated'
             else:
                 record[key] = "CRP"
-        if key == 'permanant':
-            record.pop(key)
+    record.pop('permanant')
     return record
 
 def embed_class(self, record, author: discord.Member):
