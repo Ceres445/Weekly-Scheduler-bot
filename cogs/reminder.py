@@ -10,10 +10,26 @@ from datetime import datetime
 from .utils.functions import hour_rounder
 
 
-def embed_class(record, author: discord.Member):
-    desc = ''
+def convert_record(self, record):
     for key, value in record.items():
-        desc += str(key) + ': ' + str(value)
+        if key == 'day':
+            record[key] = self.converter['day_name'][value]
+        if key == 'subject':
+            record[key] = self.converter['subjects'][value]
+        if key == 'attendees':
+            if value == 'int':
+                record[key] = 'Integrated'
+            else:
+                record[key] = "CRP"
+        if key == 'permanent':
+            record.pop(key)
+    return record
+
+def embed_class(self, record, author: discord.Member):
+    desc = ''
+    record = convert_record(self, record)
+    for key, value in record.items():
+        desc += str(key) + ': ' + str(value) + '\n'
     embed = discord.Embed(title=f"Class", description=desc)
     embed.set_author(name=author.name, url=author.avatar_url)
     return embed
@@ -26,6 +42,7 @@ class reminder(commands.Cog):
                 open("cogs/json_files/time.json", "r") as f2:
             self.embeds = json.load(f)
             self.links = json.load(f2)['links']
+            self.converter = json.load(f2)
         self.channel = None
         self.data = None
         self.remind.start()
@@ -68,7 +85,7 @@ class reminder(commands.Cog):
         index = self.get_index(today_time, day, time)
         today = list(filter(lambda x: x['day'] == index[1], self.data))
         record = list(filter(lambda x: x['time'] == index[0], today))[0]
-        await ctx.send(embed=embed_class(record, ctx.author))
+        await ctx.send(embed=embed_class(self, record, ctx.author))
 
     def get_index(self, today_time, day, time):
         state = 0
