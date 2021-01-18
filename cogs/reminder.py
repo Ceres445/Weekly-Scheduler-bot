@@ -25,13 +25,20 @@ def convert_record(self, record):
     record.pop('permanant')
     return record
 
+
 def embed_class(self, record, author: discord.Member):
     desc = ''
     record = convert_record(self, record)
+    subject = record['subject']
+    record.pop('subject')
     for key, value in record.items():
         desc += str(key) + ': ' + str(value) + '\n'
-    embed = discord.Embed(title=f"Class", description=desc)
-    embed.set_footer(text=f'Invoked by {author.display_name}', icon_url = author.avatar_url)
+    if record['day'] == dt.now().weekday():
+        typer = "today"
+    else:
+        typer = 'tomorrow'
+    embed = discord.Embed(title=f"{subject} class {typer}", description=desc, timestamp=dt.now())
+    embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
 
 
