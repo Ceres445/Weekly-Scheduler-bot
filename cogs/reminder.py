@@ -37,7 +37,7 @@ def embed_class(self, record, author: discord.Member):
         typer = "today"
     else:
         typer = 'tomorrow'
-    embed = discord.Embed(title=f"{subject} class {typer}", description=desc, timestamp=dt.now())
+    embed = discord.Embed(title=f"{subject} class {typer}", description=desc, timestamp=dt.utcnow())
     embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
 
