@@ -7,6 +7,8 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
+from discord.ext.commands import BadArgument
+
 from .utils.functions import hour_rounder
 
 
@@ -149,13 +151,16 @@ class reminder(commands.Cog):
         today = list(filter(lambda x: x['day'] == day, self.data))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
-    @commands.command(description="valid subjects are phy, comp, che, eng, bio, math")
+    @commands.command(description="valid subjects are phy, comp, chem, eng, bio, math")
     async def embed(self, ctx, subject: str = "phy_"):
         """Shows the embed for any subject"""
-        if len(subject) == 3:
-            await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject+ '_']))
-        else:
-            await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
+        try:
+            if len(subject) == 3:
+                await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject+ '_']))
+            else:
+                await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
+        except KeyError:
+            raise BadArgument
 
 
 def setup(bot):

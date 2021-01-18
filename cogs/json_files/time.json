@@ -13,7 +13,7 @@
     "comp": "Computer Science",
     "bio_": "Biology",
     "eng_": "English",
-    "che_": "Chemistry",
+    "chem": "Chemistry",
     "math": "Math"
   }
 }

@@ -1,107 +1,88 @@
 {
-  "roles": {
-    "chem": 727144139115724883,
-    "phy_": 727144098124922947,
-    "math": 727144272578478180,
-    "bio_": 727144317369450600,
-    "comp": 698791917026017291,
-    "eng_": 698791917026017291
-  },
-  "chem":
-          {
-    "footer":{
-        "text":"CRR TIME",
-        "icon_url":"https:\/\/images-ext-1.discordapp.net\/external\/KJskVLo-lYoxyPz19wcI7LS9TmdaDWnJUUYmIPmwhkg\/%3Fwidth%3D481%26height%3D481\/https\/media.discordapp.net\/attachments\/697322080135282761\/733675009171521536\/crr_very_happy.png?width=300&height=300",
-        "proxy_icon_url":"https:\/\/images-ext-2.discordapp.net\/external\/dNJNo_calLKB07beuK2gxOMSatkuXfrI45t00KhU2DQ\/%3Fwidth%3D300%26height%3D300\/https\/images-ext-1.discordapp.net\/external\/KJskVLo-lYoxyPz19wcI7LS9TmdaDWnJUUYmIPmwhkg\/%253Fwidth%253D481%2526height%253D481\/https\/media.discordapp.net\/attachments\/697322080135282761\/733675009171521536\/crr_very_happy.png"
+    "roles": {
+        "chem": 727144139115724883,
+        "phy_": 727144098124922947,
+        "math": 727144272578478180,
+        "bio_": 727144317369450600,
+        "comp": 698791917026017291,
+        "eng_": 698791917026017291
     },
-    "thumbnail":{
-        "url":"https:\/\/media.discordapp.net\/attachments\/697322080135282761\/739720373813116948\/image0_4.png?width=346&height=300",
-        "proxy_url":"https:\/\/images-ext-1.discordapp.net\/external\/ZSz1t0dWiBqcY8iszUSs6KrQFlytMnjezZtto2VrlD8\/%3Fwidth%3D346%26height%3D300\/https\/media.discordapp.net\/attachments\/697322080135282761\/739720373813116948\/image0_4.png",
-        "width":346,
-        "height":300
+    "chem": {
+        "title": "If you take everythin CRR thru u out of room",
+        "description": "[Meeting Link](https://us02web.zoom.us/j/85357566649?pwd=bnhXYVVsWVVsdjVoVTlpWWhxUWhtdz09)\nMeeting ID: 853 5756 6649\nPasscode: Boltz@CRR\n\n[RISE account](https://us02web.zoom.us/j/3544084634?pwd=VTFzeXJTN1JUMURvRU5zYlh3cWhJdz09)\n\nMeeting ID: 354 408 4634\nPasscode: 4eDHPw",
+        "thumbnail": {
+            "url": "https://media.discordapp.net/attachments/697322080135282761/739720373813116948/image0_4.png?width=346&height=300"
+        },
+        "color": 5198940,
+        "footer": {
+            "icon_url": "https://images-ext-1.discordapp.net/external/KJskVLo-lYoxyPz19wcI7LS9TmdaDWnJUUYmIPmwhkg/%3Fwidth%3D481%26height%3D481/https/media.discordapp.net/attachments/697322080135282761/733675009171521536/crr_very_happy.png?width=300&height=300",
+            "text": "CRR TIME"
+        }
     },
-    "color":5198940,
-    "type":"rich",
-    "description":"[Meeting Link](https:\/\/us02web.zoom.us\/j\/86954810954?pwd=UXAremM1UCtQaGl5SEdRazVIWjJsUT09)\n\nMeeting ID: 869 5481 0954\nPasscode: 621919",
-    "title":"CRR WILL COME TO YOUR HOUSE AND KILL YOU IF YOU DON'T ATTEND"
-},
-  "phy_":
-  {
-    "footer":{
-        "text":"Ashwin Sir",
-        "icon_url":"https:\/\/cdn.discordapp.com\/emojis\/738711691260592178.png?v=1",
-        "proxy_icon_url":"https:\/\/images-ext-1.discordapp.net\/external\/_nWDTIoMtzhBWLA9DpSQtfCu8u_O3WiovzdHJTGEqU4\/%3Fv%3D1\/https\/cdn.discordapp.com\/emojis\/738711691260592178.png"
+    "phy_": {
+        "footer": {
+            "text": "Ashwin Sir",
+            "icon_url": "https://cdn.discordapp.com/emojis/738711691260592178.png?v=1",
+            "proxy_icon_url": "https://images-ext-1.discordapp.net/external/_nWDTIoMtzhBWLA9DpSQtfCu8u_O3WiovzdHJTGEqU4/%3Fv%3D1/https/cdn.discordapp.com/emojis/738711691260592178.png"
+        },
+        "thumbnail": {
+            "url": "https://images-ext-2.discordapp.net/external/wnmzJNFhEf5zQyOxNpFK-qY3eOknYHjPkhxPZob0vHc/https/images-ext-2.discordapp.net/external/7YiCnXVpLhkcubwioQZjOly2VVVFACJtIsV3UH3ecL4/%253Fv%253D1%252522%257D%252C%252522color%252522%253A5198940%252C%252522footer%252522%253A%257B%252522icon_url%252522%253A%252522https%253A%252F%252Fcdn.discordapp.com%252Femojis%252F738711691260592178.png%253Fv%253D1%252522%252C%252522text%252522%253A%252522Ashwin/https/cdn.discordapp.com/emojis/725699874343092254.png",
+            "proxy_url": "https://images-ext-2.discordapp.net/external/ejbXKL3w9ZmU4Ra_-EPcAEh7PcIFQKSn9AT3IYsojBU/https/images-ext-2.discordapp.net/external/wnmzJNFhEf5zQyOxNpFK-qY3eOknYHjPkhxPZob0vHc/https/images-ext-2.discordapp.net/external/7YiCnXVpLhkcubwioQZjOly2VVVFACJtIsV3UH3ecL4/%25253Fv%25253D1%25252522%25257D%25252C%25252522color%25252522%25253A5198940%25252C%25252522footer%25252522%25253A%25257B%25252522icon_url%25252522%25253A%25252522https%25253A%25252F%25252Fcdn.discordapp.com%25252Femojis%25252F738711691260592178.png%25253Fv%25253D1%25252522%25252C%25252522text%25252522%25253A%25252522Ashwin/https/cdn.discordapp.com/emojis/725699874343092254.png",
+            "width": 128,
+            "height": 128
+        },
+        "color": 5198940,
+        "type": "rich",
+        "description": "[Meeting link](https://us02web.zoom.us/j/88129691783?pwd=Q2ZmODhwT3BSaE9LdFBzZVAxVUlMQT09)\n\nMeeting ID: 881 2969 1783\nPassword: phy1004",
+        "title": "Physics Class yay"
     },
-    "thumbnail":{
-        "url":"https:\/\/images-ext-2.discordapp.net\/external\/wnmzJNFhEf5zQyOxNpFK-qY3eOknYHjPkhxPZob0vHc\/https\/images-ext-2.discordapp.net\/external\/7YiCnXVpLhkcubwioQZjOly2VVVFACJtIsV3UH3ecL4\/%253Fv%253D1%252522%257D%252C%252522color%252522%253A5198940%252C%252522footer%252522%253A%257B%252522icon_url%252522%253A%252522https%253A%252F%252Fcdn.discordapp.com%252Femojis%252F738711691260592178.png%253Fv%253D1%252522%252C%252522text%252522%253A%252522Ashwin\/https\/cdn.discordapp.com\/emojis\/725699874343092254.png",
-        "proxy_url":"https:\/\/images-ext-2.discordapp.net\/external\/ejbXKL3w9ZmU4Ra_-EPcAEh7PcIFQKSn9AT3IYsojBU\/https\/images-ext-2.discordapp.net\/external\/wnmzJNFhEf5zQyOxNpFK-qY3eOknYHjPkhxPZob0vHc\/https\/images-ext-2.discordapp.net\/external\/7YiCnXVpLhkcubwioQZjOly2VVVFACJtIsV3UH3ecL4\/%25253Fv%25253D1%25252522%25257D%25252C%25252522color%25252522%25253A5198940%25252C%25252522footer%25252522%25253A%25257B%25252522icon_url%25252522%25253A%25252522https%25253A%25252F%25252Fcdn.discordapp.com%25252Femojis%25252F738711691260592178.png%25253Fv%25253D1%25252522%25252C%25252522text%25252522%25253A%25252522Ashwin\/https\/cdn.discordapp.com\/emojis\/725699874343092254.png",
-        "width":128,
-        "height":128
+    "math": {
+        "title": "DON'T SURRENDER TO TRIGONOMETRY -MSK",
+        "description": "[Meeting Link](https://us02web.zoom.us/j/86894620244?pwd=dXdMQzRZbjdIb3hNQjJYbHBpd0lEZz09)\n\n\nMeeting ID: 868 9462 0244\nPasscode: Msk@1234",
+        "thumbnail": {
+            "url": "https://media.discordapp.net/attachments/697322080135282761/739720872327381012/Screenshot_from_2020-07-18_02-50-27.png?width=313&height=502"
+        },
+        "color": 5198940,
+        "footer": {
+            "icon_url": "https://cdn.discordapp.com/emojis/726739328801308752.png?v=1",
+            "text": "MSK math power"
+        }
     },
-    "color":5198940,
-    "type":"rich",
-    "description":"[Meeting link](https:\/\/us02web.zoom.us\/j\/88129691783?pwd=Q2ZmODhwT3BSaE9LdFBzZVAxVUlMQT09)\n\nMeeting ID: 881 2969 1783\nPassword: phy1004",
-    "title":"Physics Class yay"
-},
-  "math":
-  {
-    "footer":{
-        "text":"MSK math power",
-        "icon_url":"https:\/\/cdn.discordapp.com\/emojis\/726739328801308752.png?v=1",
-        "proxy_icon_url":"https:\/\/images-ext-1.discordapp.net\/external\/ob0CiV3RaOtIW1D6G_cerox9QZpO36oqQ-dVvEeYYLc\/%3Fv%3D1\/https\/cdn.discordapp.com\/emojis\/726739328801308752.png"
+    "bio_": {
+        "footer": {
+            "text": "Biology time"
+        },
+        "thumbnail": {
+            "url": "https://media.discordapp.net/attachments/725336351532122156/743508564118601809/Screenshot_2020-08-13_at_10.07.30_PM.png?width=654&height=534",
+            "width": 654,
+            "height": 534
+        },
+        "color": 5198940,
+        "type": "rich",
+        "description": "[Meeting Link](https://us02web.zoom.us/j/82060869178?pwd=enhidUticENCVkwybkg3S3JpSGNuZz09)\n\n\nMeeting ID: 820 6086 9178\nPassword: rajabio",
+        "title": "It's time to crack some bones"
     },
-    "thumbnail":{
-        "url":"https:\/\/media.discordapp.net\/attachments\/697322080135282761\/739720872327381012\/Screenshot_from_2020-07-18_02-50-27.png?width=313&height=502",
-        "proxy_url":"https:\/\/images-ext-2.discordapp.net\/external\/Y6AT3krSKx4F2QinKbYtVyQt7wQIpQgCPo-mqdXN6Lc\/%3Fwidth%3D313%26height%3D502\/https\/media.discordapp.net\/attachments\/697322080135282761\/739720872327381012\/Screenshot_from_2020-07-18_02-50-27.png",
-        "width":313,
-        "height":502
+    "comp": {
+        "title": "Computer science",
+        "description": "PIETON TIME JOIN JOIN\n[THE LINK](https://meet.google.com/zbc-gjie-nxi)\n\n[NO THIS IS THE LINK](https://www.youtube.com/watch?v=dQw4w9WgXcQ)",
+        "image": {
+            "url": "https://banner2.cleanpng.com/20180825/box/kisspng-python-programming-language-computer-programming-c-hanuman-png-transparent-images-free-download-clip-5b814ed3233799.3867698615352009791443.jpg"
+        },
+        "color": 2105893
     },
-    "color":5198940,
-    "type":"rich",
-    "description":"[Meeting Link](https:\/\/us02web.zoom.us\/j\/83860068813?pwd=UzFuWmgrSnlxRCtaZEllL0ZzTjV3Zz09)\n\n\nMeeting ID: 838 6006 8813\nPassword: 905921",
-    "title":"DON'T SURRENDER TO TRIGONOMETRY -MSK"
-},
-  "bio_":
-  {
-    "footer":{
-      "text": "Biology time"
-    },
-    "thumbnail":{
-      "url":"https:\/\/media.discordapp.net/attachments\/725336351532122156/743508564118601809\/Screenshot_2020-08-13_at_10.07.30_PM.png?width=654&height=534",
-      "width":654,
-      "height":534
-    },
-    "color":5198940,
-    "type":"rich",
-    "description":"[Meeting Link](https://us02web.zoom.us/j/82060869178?pwd=enhidUticENCVkwybkg3S3JpSGNuZz09)\n\n\nMeeting ID: 820 6086 9178\nPassword: rajabio",
-    "title":"It's time to crack some bones"
-  },
-  "comp":
-  {
-    "title":"Computer science",
-    "description":"PIETON TIME JOIN JOIN\n[THE LINK](https://meet.google.com/zbc-gjie-nxi)\n\n[NO THIS IS THE LINK](https://www.youtube.com/watch?v=dQw4w9WgXcQ)",
-    "image":
-      {
-        "url":"https://banner2.cleanpng.com/20180825/box/kisspng-python-programming-language-computer-programming-c-hanuman-png-transparent-images-free-download-clip-5b814ed3233799.3867698615352009791443.jpg"
-      },
-    "color":2105893
-  },
-  "eng_":
-  {
-    "title":"ENGLSIH CLAS",
-    "description":"Got the joke! no?\n[THE LINK](https://meet.google.com/aon-pmkv-gmd)\n\nNo rick rolls here :)",
-    "thumbnail":
-    {
-        "url":"https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png"
-    },
-    "image":
-    {
-      "url":"https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png"
-    },
-    "color":2105893,
-    "footer":
-    {
-      "icon_url":"https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png","text":"haha boy ride horse"
+    "eng_": {
+        "title": "ENGLSIH CLAS",
+        "description": "Got the joke! no?\n[THE LINK](https://meet.google.com/aon-pmkv-gmd)\n\nNo rick rolls here :)",
+        "thumbnail": {
+            "url": "https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png"
+        },
+        "image": {
+            "url": "https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png"
+        },
+        "color": 2105893,
+        "footer": {
+            "icon_url": "https://media.discordapp.net/attachments/725337411403513874/751021118869209088/Screenshot_2020-09-03_at_3.39.38_PM.png",
+            "text": "haha boy ride horse"
+        }
     }
-  }
 }
