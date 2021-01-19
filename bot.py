@@ -69,10 +69,10 @@ class Reminder(commands.Bot):
         await context.send(embed=embed)
 
     @classmethod
-    async def setup(cls, token):
+    async def setup(cls, toke):
         bot = cls()
         try:
-            await bot.start(token)
+            await bot.start(toke)
 
         except KeyboardInterrupt:
             await bot.close()
