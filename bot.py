@@ -5,6 +5,7 @@ import os
 import discord
 from aiohttp import ClientSession
 from discord.ext import commands
+from discord.ext.commands import CommandNotFound
 from dotenv import load_dotenv
 
 from cogs.utils.database import Database
@@ -43,10 +44,6 @@ class Reminder(commands.Bot):
         await self.wait_until_ready()
         if message.guild is None or message.author.bot:
             return
-        if message.author.id == 339365580496830466:
-            if message.content.startswith('+'):
-                await message.channel.send('No NO NO NO')
-            return
         ctx = await self.get_context(message)
         await self.invoke(ctx)
 
@@ -63,7 +60,13 @@ class Reminder(commands.Bot):
         await self.change_presence(status=discord.Status.online, activity=discord.Game(name='use the prefix "+"'))
 
     async def on_command_error(self, context, exception):
-        await self.log(content=f"error from {context.message.jump_url }\n {exception}")
+        if isinstance(exception, CommandNotFound):
+            await context.send('thats not a command')
+            return
+        embed = discord.Embed(title=f"{type(exception).__name__}", colour=discord.Colour.red(),
+                              description=str(exception))
+        await self.log(content=f"error from {context.message.jump_url}\n {exception}")
+        await context.send(embed=embed)
 
     @classmethod
     async def setup(cls, token):
