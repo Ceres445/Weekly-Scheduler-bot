@@ -87,6 +87,11 @@ class reminder(commands.Cog):
         else:
             print("check failed")
 
+    @commands.is_owner()
+    async def reload(self, ctx):
+        self.data = await self.bot.db.get_data()
+        await ctx.send('loaded')
+
     @remind.before_loop
     async def before_remind(self):
         await self.bot.wait_until_ready()
