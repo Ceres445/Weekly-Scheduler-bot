@@ -7,8 +7,6 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
-from discord.ext.commands import BadArgument
-
 from .utils.functions import hour_rounder
 
 
@@ -47,7 +45,7 @@ def embed_class(self, record, author: discord.Member):
 def embeds_class(self, today, author, typer):
     embed = discord.Embed(title=f"Classes {typer} on {self.converter['day_name'][today[0]['day']]}",
                           timestamp=dt.utcnow())
-    today = sorted(today, key= lambda x: x['time'])
+    today = sorted(today, key=lambda x: x['time'])
     for record in today:
         record = convert_record(self, record)
         subject = record['subject']
