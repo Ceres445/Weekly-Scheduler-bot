@@ -44,7 +44,7 @@ class Reminder(commands.Bot):
         if message.guild is None or message.author.bot:
             return
         if message.author.id == 339365580496830466:
-            if message.startswith('+'):
+            if message.content.startswith('+'):
                 await message.channel.send('No NO NO NO')
             return
         ctx = await self.get_context(message)
