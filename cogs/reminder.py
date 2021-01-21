@@ -28,6 +28,12 @@ def convert_record(self, record):
 
 def embed_class(self, record, author: discord.Member):
     desc = ''
+    if record['day'] == dt.now().weekday():
+        typer = "today"
+    elif record['day'] == dt.now().weekday() +1 or (dt.now().weekday()== 6 and record['day'] == 0):
+        typer = 'tomorrow'
+    else:
+        typer = "a few days from now"
     record = convert_record(self, record)
     subject = record['subject']
     record.pop('subject')
@@ -35,10 +41,7 @@ def embed_class(self, record, author: discord.Member):
     record.pop('attendees')
     for key, value in record.items():
         desc += str(key).capitalize() + ': ' + str(value) + '\n'
-    if record['day'] == self.converter['day_name'][dt.now().weekday()]:
-        typer = "today"
-    else:
-        typer = 'tomorrow'
+
     embed = discord.Embed(title=f"{subject} class {typer} for {attendee} ", description=desc, timestamp=dt.utcnow())
     embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
