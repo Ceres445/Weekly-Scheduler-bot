@@ -176,6 +176,8 @@ class reminder(commands.Cog):
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         today = list(filter(lambda x: x['attendees'] == attendee, today))
+        if len(today) == 0:
+            await ctx.send("No classes today :)")
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
 
     @commands.command(aliases=['tmr'])
@@ -185,6 +187,8 @@ class reminder(commands.Cog):
         day = (datetime.now() + timedelta(hours=24)).weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         today = list(filter(lambda x: x['attendees'] == attendee, today))
+        if len(today) == 0:
+            await ctx.send("No classes tomorrow :)")
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
     @commands.command(description="valid subjects are phy, comp, chem, eng, bio, math")
