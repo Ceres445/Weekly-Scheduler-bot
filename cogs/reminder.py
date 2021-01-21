@@ -112,11 +112,6 @@ class reminder(commands.Cog):
         else:
             print("check failed")
 
-    @commands.is_owner()
-    async def reload(self, ctx):
-        self.data = await self.bot.db.get_data()
-        await ctx.send('loaded')
-
     @remind.before_loop
     async def before_remind(self):
         await self.bot.wait_until_ready()
@@ -168,6 +163,13 @@ class reminder(commands.Cog):
             today_time = sorted(today_time)
             print(time, today_time)
             return self.get_index(today_time, day, time, attendee)
+
+    @commands.is_owner()
+    @commands.command()
+    async def reload(self, ctx):
+        self.data = await self.bot.db.get_data()
+        await ctx.send('loaded')
+
 
     @commands.command()
     async def today(self, ctx):
