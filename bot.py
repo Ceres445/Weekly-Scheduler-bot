@@ -23,7 +23,7 @@ except KeyError:
 cogs = ["cogs.reminder", "cogs.help", 'cogs.misc']
 
 
-class Reminder(commands.Bot):
+class Riser(commands.Bot):
     def __init__(self, **kwargs):
         allowed_mentions = discord.AllowedMentions(everyone=False, roles=True, users=True)
         super().__init__(command_prefix=kwargs.pop('command_prefix', ['+']), case_insensitive=True,
@@ -80,4 +80,4 @@ class Reminder(commands.Bot):
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(Reminder.setup(token))
+    loop.run_until_complete(Riser.setup(token))

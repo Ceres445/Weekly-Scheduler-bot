@@ -20,7 +20,7 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def credits(self, ctx):
-        await ctx.send(f"Created by {self.bot.owner.name}, pfp credit Blitz")
+        await ctx.send(f"Created by Ceres, pfp credit Blitz")
 
 def setup(bot):
     bot.add_cog(Misc(bot))
