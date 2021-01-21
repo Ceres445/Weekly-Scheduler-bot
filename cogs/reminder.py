@@ -31,19 +31,22 @@ def embed_class(self, record, author: discord.Member):
     record = convert_record(self, record)
     subject = record['subject']
     record.pop('subject')
+    attendee = record['attendees']
+    record.pop('attendees')
     for key, value in record.items():
-        desc += str(key) + ': ' + str(value) + '\n'
+        desc += str(key).capitalize() + ': ' + str(value) + '\n'
     if record['day'] == self.converter['day_name'][dt.now().weekday()]:
         typer = "today"
     else:
         typer = 'tomorrow'
-    embed = discord.Embed(title=f"{subject} class {typer}", description=desc, timestamp=dt.utcnow())
+    embed = discord.Embed(title=f"{subject} class {typer} for {attendee} ", description=desc, timestamp=dt.utcnow())
     embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
 
 
 def embeds_class(self, today, author, typer):
-    embed = discord.Embed(title=f"Classes {typer} on {self.converter['day_name'][today[0]['day']]}",
+    base = convert_record(self, today[0])
+    embed = discord.Embed(title=f"Classes {typer} on {base['day']} for {base['attendees']}",
                           timestamp=dt.utcnow())
     today = sorted(today, key=lambda x: x['time'])
     for record in today:
@@ -51,12 +54,31 @@ def embeds_class(self, today, author, typer):
         subject = record['subject']
         record.pop('subject')
         record.pop('day')
+        record.pop('attendees')
         desc = ''
         for key, value in record.items():
             desc += str(key) + ': ' + str(value) + '\n'
         embed.add_field(name=subject + ' class', value=desc, inline=False)
     embed.set_footer(text=f'Invoked by {author.name}', icon_url=author.avatar_url)
     return embed
+
+
+class NotStudent(commands.CommandError):
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+        return self.text
+
+
+def get_attendee(roles):
+    roles = [role.id for role in roles]
+    if 698791878421774397 in roles:
+        return 'crp'
+    elif 698791917026017291 in roles:
+        return 'int'
+    else:
+        raise NotStudent("You must have Integrated or CRP role to use this command")
 
 
 class reminder(commands.Cog):
@@ -106,18 +128,20 @@ class reminder(commands.Cog):
     @commands.command()
     async def next(self, ctx):
         """Shows the next class that will happen"""
+        attendee = get_attendee(ctx.author.roles)
         time = datetime.now()
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
+        today = list(filter(lambda x: x['attendees'] == attendee, today))
         strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
         today_time = [dt.now().replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
         today_time = sorted(today_time)
-        index = self.get_index(today_time, day, time)
+        index = self.get_index(today_time, day, time, attendee)
         today = list(filter(lambda x: x['day'] == index[1], self.data))
         record = list(filter(lambda x: x['time'] == index[0], today))[0]
         await ctx.send(embed=embed_class(self, record, ctx.author))
 
-    def get_index(self, today_time, day, time):
+    def get_index(self, today_time, day, time, attendee):
         state = 0
         for i in today_time:
             if i >= time:
@@ -132,6 +156,7 @@ class reminder(commands.Cog):
             else:
                 day += 1
             today = list(filter(lambda x: x['day'] == day, self.data))
+            today = list(filter(lambda x: x['attendees'] == attendee, today))
             strifted = [dt.strptime(x['time'], '%H:%M') for x in today]
 
             time = time + timedelta(hours=24)
@@ -144,15 +169,19 @@ class reminder(commands.Cog):
     @commands.command()
     async def today(self, ctx):
         """Shows the classes that are happening today"""
+        attendee = get_attendee(ctx.author.roles)
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
+        today = list(filter(lambda x: x['attendees'] == attendee, today))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
 
     @commands.command(aliases=['tmr'])
     async def tomorrow(self, ctx):
         """Shows the classes that will happen tomorrow"""
+        attendee = get_attendee(ctx.author.roles)
         day = (datetime.now() + timedelta(hours=24)).weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
+        today = list(filter(lambda x: x['attendees'] == attendee, today))
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
     @commands.command(description="valid subjects are phy, comp, chem, eng, bio, math")
