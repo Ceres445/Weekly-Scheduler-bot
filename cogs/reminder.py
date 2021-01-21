@@ -164,7 +164,7 @@ class reminder(commands.Cog):
             today_time = [time.replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
             today_time = sorted(today_time)
             print(time, today_time)
-            return self.get_index(today_time, day, time)
+            return self.get_index(today_time, day, time, attendee)
 
     @commands.command()
     async def today(self, ctx):
