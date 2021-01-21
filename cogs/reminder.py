@@ -178,6 +178,7 @@ class reminder(commands.Cog):
         today = list(filter(lambda x: x['attendees'] == attendee, today))
         if len(today) == 0:
             await ctx.send("No classes today :)")
+            return
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
 
     @commands.command(aliases=['tmr'])
@@ -189,6 +190,7 @@ class reminder(commands.Cog):
         today = list(filter(lambda x: x['attendees'] == attendee, today))
         if len(today) == 0:
             await ctx.send("No classes tomorrow :)")
+            return
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'tomorrow'))
 
     @commands.command(description="valid subjects are phy, comp, chem, eng, bio, math")
