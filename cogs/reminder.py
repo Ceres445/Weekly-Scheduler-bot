@@ -7,6 +7,8 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
+from discord.ext.commands import BadArgument
+
 from .utils.functions import hour_rounder
 
 
@@ -124,7 +126,13 @@ class reminder(commands.Cog):
         await asyncio.sleep(hour_rounder())
 
     @commands.command()
-    async def next(self, ctx):
+    async def next(self, ctx, attendee: str = None):
+        if attendee is None:
+            attendee = get_attendee(ctx.author.roles)
+        elif attendee.lower().strip() not in ('crp', 'int'):
+            raise BadArgument("attendee should be int or crp")
+        else:
+            attendee = attendee.lower().strip()[:3]
         """Shows the next class that will happen"""
         attendee = get_attendee(ctx.author.roles)
         time = datetime.now()
@@ -170,11 +178,15 @@ class reminder(commands.Cog):
         self.data = await self.bot.db.get_data()
         await ctx.send('loaded')
 
-
     @commands.command()
-    async def today(self, ctx):
+    async def today(self, ctx, attendee: str = None):
         """Shows the classes that are happening today"""
-        attendee = get_attendee(ctx.author.roles)
+        if attendee is None:
+            attendee = get_attendee(ctx.author.roles)
+        elif attendee.lower().strip() not in ('crp', 'int'):
+            raise BadArgument("attendee should be int or crp")
+        else:
+            attendee = attendee.lower().strip()[:3]
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         today = list(filter(lambda x: x['attendees'] == attendee, today))
@@ -184,9 +196,14 @@ class reminder(commands.Cog):
         await ctx.send(embed=embeds_class(self, today, ctx.author, 'today'))
 
     @commands.command(aliases=['tmr'])
-    async def tomorrow(self, ctx):
+    async def tomorrow(self, ctx, attendee: str = None):
         """Shows the classes that will happen tomorrow"""
-        attendee = get_attendee(ctx.author.roles)
+        if attendee is None:
+            attendee = get_attendee(ctx.author.roles)
+        elif attendee.lower().strip()[:3] not in ('crp', 'int'):
+            raise BadArgument("attendee should be int or crp")
+        else:
+            attendee = attendee.lower().strip()[:3]
         day = (datetime.now() + timedelta(hours=24)).weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
         today = list(filter(lambda x: x['attendees'] == attendee, today))
