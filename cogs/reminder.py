@@ -130,11 +130,10 @@ class reminder(commands.Cog):
         if attendee is None:
             attendee = get_attendee(ctx.author.roles)
         elif attendee.lower().strip() not in ('crp', 'int'):
-            raise BadArgument("attendee should be int or crp")
+            raise BadArgument("attendee: should be int or crp")
         else:
             attendee = attendee.lower().strip()[:3]
         """Shows the next class that will happen"""
-        attendee = get_attendee(ctx.author.roles)
         time = datetime.now()
         day = datetime.now().weekday()
         today = list(filter(lambda x: x['day'] == day, self.data))
@@ -184,7 +183,7 @@ class reminder(commands.Cog):
         if attendee is None:
             attendee = get_attendee(ctx.author.roles)
         elif attendee.lower().strip() not in ('crp', 'int'):
-            raise BadArgument("attendee should be int or crp")
+            raise BadArgument("attendee: should be int or crp")
         else:
             attendee = attendee.lower().strip()[:3]
         day = datetime.now().weekday()
@@ -201,7 +200,7 @@ class reminder(commands.Cog):
         if attendee is None:
             attendee = get_attendee(ctx.author.roles)
         elif attendee.lower().strip()[:3] not in ('crp', 'int'):
-            raise BadArgument("attendee should be int or crp")
+            raise BadArgument("attendee: should be int or crp")
         else:
             attendee = attendee.lower().strip()[:3]
         day = (datetime.now() + timedelta(hours=24)).weekday()
