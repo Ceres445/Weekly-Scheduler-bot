@@ -100,11 +100,9 @@ class reminder(commands.Cog):
 
     @tasks.loop(minutes=5)
     async def remind(self):
-        print(datetime.now().strftime('%H:%M'))
         time = datetime.now().strftime('%H:%M')
         day = datetime.now().weekday()
         print(time, day, "is the time and day")
-        print([[x['day'], x['time']] for x in self.data])
         if [day, time] in [[x['day'], x['time']] for x in self.data]:
             record = self.data[[[x['day'], x['time']] for x in self.data].index([day, time])]
             await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
@@ -119,10 +117,8 @@ class reminder(commands.Cog):
         await self.bot.wait_until_ready()
         await asyncio.sleep(3)
         self.channel = self.bot.guild.get_channel(698792545760706590)
-        print(datetime.now().strftime('%H:%M'))
         await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}.")
         self.data = await self.bot.db.get_data()
-        print([[x['day'], x['time']] for x in self.data], hour_rounder())
         await asyncio.sleep(hour_rounder())
 
     @commands.command()
@@ -169,7 +165,6 @@ class reminder(commands.Cog):
             time = time.replace(hour=0, minute=0, second=0, microsecond=0)
             today_time = [time.replace(hour=a.hour, minute=a.minute, second=0, microsecond=0) for a in strifted]
             today_time = sorted(today_time)
-            print(time, today_time)
             return self.get_index(today_time, day, time, attendee)
 
     @commands.is_owner()
