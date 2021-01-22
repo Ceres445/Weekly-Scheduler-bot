@@ -9,7 +9,7 @@ from datetime import datetime
 
 from discord.ext.commands import BadArgument
 
-from .utils.functions import hour_rounder
+from cogs.utils.functions import hour_rounder
 
 
 def convert_record(self, record):
@@ -32,7 +32,7 @@ def embed_class(self, record, author: discord.Member):
     desc = ''
     if record['day'] == dt.now().weekday():
         typer = "today"
-    elif record['day'] == dt.now().weekday() +1 or (dt.now().weekday()== 6 and record['day'] == 0):
+    elif record['day'] == dt.now().weekday() + 1 or (dt.now().weekday() == 6 and record['day'] == 0):
         typer = 'tomorrow'
     else:
         typer = "a few days from now"
@@ -148,6 +148,7 @@ class reminder(commands.Cog):
 
     def get_index(self, today_time, day, time, attendee):
         state = 0
+        index = 0
         for i in today_time:
             if i >= time:
                 index = today_time.index(i)
@@ -220,7 +221,7 @@ class reminder(commands.Cog):
             else:
                 await ctx.send(embed=discord.Embed.from_dict(self.embeds[subject]))
         except KeyError:
-            await ctx.send(f'<@339365580496830466> {ctx.author.mention} thats not a valid subject use '
+            await ctx.send(f'<@339365580496830466> {ctx.author.mention} that is not a valid subject use '
                            f'+help embed for info')
 
 

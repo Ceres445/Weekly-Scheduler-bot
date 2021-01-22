@@ -1,13 +1,4 @@
-import asyncio
-import json
-from datetime import datetime as dt, timedelta
-
-import discord
 from discord.ext import commands
-from discord.ext import tasks
-from datetime import datetime
-
-from .utils.functions import hour_rounder
 
 
 class Misc(commands.Cog):

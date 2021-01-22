@@ -1,8 +1,6 @@
 import asyncio
 
 import asyncpg
-import discord
-from datetime import datetime
 
 
 class Database(object):

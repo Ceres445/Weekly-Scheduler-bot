@@ -32,6 +32,7 @@ class Riser(commands.Bot):
         self.start_time = datetime.datetime.utcnow()
         self.clean_text = commands.clean_content(escape_markdown=True, fix_channel_mentions=True)
         self.guild = None
+        self.db, self.log_channel = None, None
         for extension in cogs:
             self.load_extension(extension)
             print("loaded extension", extension)
@@ -61,7 +62,7 @@ class Riser(commands.Bot):
 
     async def on_command_error(self, context, exception):
         if isinstance(exception, CommandNotFound):
-            await context.send('thats not a command')
+            await context.send('that is not a command')
             return
         embed = discord.Embed(title=f"{type(exception).__name__}", colour=discord.Colour.red(),
                               description=str(exception))
