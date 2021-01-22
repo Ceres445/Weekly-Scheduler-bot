@@ -105,7 +105,7 @@ class reminder(commands.Cog):
         print([[x['day'], x['time']] for x in self.data])
         if [day, time] in [[x['day'], x['time']] for x in self.data]:
             record = self.data[[[x['day'], x['time']] for x in self.data].index([day, time])]
-            await self.channel.send(content=f"<@&{self.embeds['roles'][record['subject']]}>",
+            await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
                                     embed=discord.Embed().from_dict(self.embeds[record['subject']]))
             if not record['permanant']:
                 await self.bot.db.delete(record)
