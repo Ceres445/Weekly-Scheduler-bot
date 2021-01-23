@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Rise-Reminder.iml" filepath="$PROJECT_DIR$/.idea/Rise-Reminder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Riser.iml" filepath="$PROJECT_DIR$/.idea/Riser.iml" />
     </modules>
   </component>
 </project>
