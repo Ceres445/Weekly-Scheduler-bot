@@ -21,8 +21,9 @@ def get_string(elements):
     with open('cogs/utils/index.html', 'r') as f:
         string = f.read()
     template = Template(string)
-    buffer = BytesIO()
+
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
-    imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config).save(buffer, "png")
+    img = imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config)
+    buffer = BytesIO(img)
     buffer.seek(0)
     return buffer
