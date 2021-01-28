@@ -25,7 +25,7 @@ def get_string(elements):
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements)), k=[range(i['span']) for i in elements.values()]), False, config=config)
     buffer = BytesIO(img)
-    image = Image.open(buffer)
+    image = Image.open(buffer.read())
     buff = BytesIO()
     size = image.size
     image1 = image.crop((1, 2, 350, size[1]-1))
