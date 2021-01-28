@@ -7,4 +7,4 @@ def get_string(elements):
         string = f.read()
     template = Template(string)
 
-    return template.render(a=elements)
+    return template.render(a=elements, r=range(len(elements)))
