@@ -2,7 +2,7 @@ import subprocess
 
 from jinja2 import Template
 import imgkit
-from io import BytesIO
+from io import BytesIO, StringIO
 import os
 from PIL import Image
 
@@ -24,7 +24,7 @@ def get_string(elements):
     template = Template(string)
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements)), k=[range(i['span']) for i in elements.values()]), False, config=config)
-    buffer = BytesIO(img)
+    buffer = StringIO(img.decode())
     buffer.seek(0)
     image = Image.open(buffer)
     buff = BytesIO()
