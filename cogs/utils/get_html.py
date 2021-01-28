@@ -4,6 +4,7 @@ from jinja2 import Template
 import imgkit
 from io import BytesIO
 import os
+from PIL import Image
 
 if 'DYNO' in os.environ:
     print('loading wkhtmltopdf path on heroku')
@@ -25,5 +26,8 @@ def get_string(elements):
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config)
     buffer = BytesIO(img)
-    buffer.seek(0)
-    return buffer.read()
+    image = Image.open(buffer)
+    buffer.close()
+    buffer = BytesIO()
+    image.save(buffer, 'png')
+    return buffer
