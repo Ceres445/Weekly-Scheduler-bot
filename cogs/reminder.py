@@ -102,12 +102,8 @@ class reminder(commands.Cog):
     @commands.command()
     async def html(self, ctx):
         data = [convert_record(self, record) for record in self.data]
-        pages = Paginator(prefix='```html')
-        string = get_string(data)
-        pages.add_line(string[:1900])
-        pages.add_line(string[1900:])
-        for page in pages.pages:
-            await ctx.send(page)
+        img = get_string(data)
+        await ctx.send(file=discord.File(fp=img, filename= "table.png"))
 
     @tasks.loop(minutes=5)
     async def remind(self):
