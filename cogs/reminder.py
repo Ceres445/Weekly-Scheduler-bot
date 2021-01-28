@@ -103,7 +103,10 @@ class reminder(commands.Cog):
     async def html(self, ctx):
         data = [convert_record(self, record) for record in self.data]
         img = get_string(data)
-        await ctx.send(file=discord.File(fp=img, filename= "table.png"))
+        embed = discord.Embed()
+        file = discord.File(fp=img, filename="table.png")
+        embed.set_image(url="attachment://table.png")
+        await ctx.send(file=file, embed=embed)
 
     @tasks.loop(minutes=5)
     async def remind(self):
