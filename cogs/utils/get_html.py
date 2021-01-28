@@ -23,6 +23,7 @@ def get_string(elements):
         string = f.read()
     template = Template(string)
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
+    print(WKHTMLTOPDF_CMD)
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements)),
                                              k=[range(i['span']) for i in elements.values()]), False, config=config)
     print(img[:20])
