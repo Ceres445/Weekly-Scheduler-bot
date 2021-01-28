@@ -23,8 +23,9 @@ def get_string(elements):
     template = Template(string)
 
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
-    options = {'format': 'png', 'width': '640', 'height': '480'}
-    img = imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config)
-    buffer = BytesIO(img)
-    buffer.seek(0)
-    return buffer
+    return template.render(a=elements, r=range(len(elements)))
+    # options = {'format': 'png', 'width': '640', 'height': '480'}
+    # img = imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config)
+    # buffer = BytesIO(img)
+    # buffer.seek(0)
+    # return buffer

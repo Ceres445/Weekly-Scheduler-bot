@@ -101,7 +101,8 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def html(self, ctx):
-        data = [convert_record(self, record) for record in self.data]
+        data = sorted(self.data, key=lambda x: (x['day'], x['time']))
+        data = [convert_record(self, record) for record in data]
         img = get_string(data)
         embed = discord.Embed()
         file = discord.File(fp=img, filename="table.png")
