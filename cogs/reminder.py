@@ -102,8 +102,16 @@ class reminder(commands.Cog):
     @commands.command()
     async def html(self, ctx):
         data = sorted(self.data, key=lambda x: (x['day'], x['time']))
-        data = [convert_record(self, record) for record in data]
-        img = get_string(data)
+        new = {}
+        for day in range(6):
+            today = [record for record in data if record['day'] == day]
+            new[day] = {
+                "span": len(today),
+                "day": self.converter['day_name'][day],
+                "subjects": [self.converter['subjects'][record['subject']] for record in today],
+                "times": [record['time'] for record in today],
+            }
+        img = get_string(new)
         # page = Paginator(prefix='```html')
         # page.add_line(img[:1900])
         # page.add_line(img[1900:])

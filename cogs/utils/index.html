@@ -30,14 +30,17 @@ table, th, td {
           <th class="day">Subject</th>
     </tr>
     {% for i in r %}
+    {% for j in k[i] %}
     <tr>
-        <td>{{a[i]['day']}}</td>
-        <td>{{a[i]['time']}}</td>
-        <td>{{a[i]['subject']}}</td>
+        {% if j == 0 %}
+        <td rowspan={{a[i]['span']}}>{{a[i]['day']}}</td>
+        {% endif %}
+        <td>{a[i]['subjects'][j]}}</td>
+        <td>{a[i]['time'][j]}}</td>
 
     </tr>
     {% endfor %}
-
+    {% endfor %}
 </table>
 </body>
 </html>

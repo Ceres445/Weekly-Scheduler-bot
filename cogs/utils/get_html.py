@@ -22,12 +22,13 @@ def get_string(elements):
     with open('cogs/utils/index.html', 'r') as f:
         string = f.read()
     template = Template(string)
-    print(string)
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
-    img = imgkit.from_string(template.render(a=elements, r=range(len(elements))), False, config=config)
+    img = imgkit.from_string(template.render(a=elements, r=range(len(elements)), k=[range(i['span']) for i in elements.values()]), False, config=config)
     buffer = BytesIO(img)
     image = Image.open(buffer)
-    buffer.close()
-    buffer = BytesIO()
-    image.save(buffer, 'png')
-    return buffer
+    buff = BytesIO()
+    size = image.size
+    image1 = image.crop((1, 2, 350, size[1]-1))
+    image1.save(buff, 'png')
+    buff.seek(0)
+    return buff
