@@ -1,3 +1,1 @@
-group :production do
-  gem 'wkhtmltopdf-heroku'
-end
+  gem 'wkhtmltopdf-heroku', '2.12.6.0'
