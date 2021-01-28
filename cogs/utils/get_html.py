@@ -15,7 +15,7 @@ if 'DYNO' in os.environ:
 else:
     print('loading wkhtmltopdf path on localhost')
     MYDIR = os.path.dirname(__file__)
-    WKHTMLTOPDF_CMD = os.path.join(MYDIR + "/static/executables/bin/", "wkhtmltopdf.exe")
+    WKHTMLTOPDF_CMD = os.path.join(MYDIR + "/static/executables/bin/", "wkhtmltoimage.exe")
 
 
 def get_string(elements):

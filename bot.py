@@ -50,7 +50,7 @@ class Riser(commands.Bot):
 
     async def on_connect(self):
         try:
-            self.db = await Database.create_pool(bot=self, uri=os.environ["DATABASE_URL"], loop=self.loop)
+            self.db = await Database.create_pool(bot=self, uri=postgres, loop=self.loop)
         except OSError:
             print("postgres server is not running")
 

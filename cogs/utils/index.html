@@ -35,8 +35,8 @@ table, th, td {
         {% if j == 0 %}
         <td rowspan={{a[i]['span']}}>{{a[i]['day']}}</td>
         {% endif %}
-        <td>{a[i]['subjects'][j]}}</td>
-        <td>{a[i]['time'][j]}}</td>
+        <td>{{a[i]['subjects'][j]}}</td>
+        <td>{{a[i]['times'][j]}}</td>
 
     </tr>
     {% endfor %}
