@@ -104,8 +104,8 @@ class reminder(commands.Cog):
         data = [convert_record(self, record) for record in self.data]
         pages = Paginator(prefix='```html')
         string = get_string(data)
-        pages.add_line(string[:1999])
-        pages.add_line(string[1999:])
+        pages.add_line(string[:1900])
+        pages.add_line(string[1900:])
         for page in pages.pages:
             await ctx.send(page)
 
