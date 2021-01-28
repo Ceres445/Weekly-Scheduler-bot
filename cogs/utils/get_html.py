@@ -1,10 +1,10 @@
-import subprocess
-
-from jinja2 import Template
-import imgkit
-from io import BytesIO, StringIO
 import os
+import subprocess
+from io import BytesIO
+
+import imgkit
 from PIL import Image
+from jinja2 import Template
 
 if 'DYNO' in os.environ:
     print('loading wkhtmltopdf path on heroku')
@@ -23,7 +23,9 @@ def get_string(elements):
         string = f.read()
     template = Template(string)
     config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
-    img = imgkit.from_string(template.render(a=elements, r=range(len(elements)), k=[range(i['span']) for i in elements.values()]), False, config=config)
+    img = imgkit.from_string(template.render(a=elements, r=range(len(elements)),
+                                             k=[range(i['span']) for i in elements.values()]), False, config=config)
+    print(img[:20])
     buffer = BytesIO(img)
     buffer.seek(0)
     image = Image.open(buffer)
