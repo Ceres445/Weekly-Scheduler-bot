@@ -10,6 +10,7 @@ from datetime import datetime
 from discord.ext.commands import BadArgument
 
 from cogs.utils.functions import hour_rounder
+from cogs.utils.get_html import get_string
 
 
 def convert_record(self, record):
@@ -97,6 +98,11 @@ class reminder(commands.Cog):
         self.channel = None
         self.data = None
         self.remind.start()
+
+    @commands.command()
+    async def html(self, ctx):
+        data = [convert_record(self, record) for record in self.data]
+        await ctx.send(f'```html\n{get_string}```')
 
     @tasks.loop(minutes=5)
     async def remind(self):
