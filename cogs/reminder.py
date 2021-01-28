@@ -104,10 +104,15 @@ class reminder(commands.Cog):
         data = sorted(self.data, key=lambda x: (x['day'], x['time']))
         data = [convert_record(self, record) for record in data]
         img = get_string(data)
-        embed = discord.Embed()
-        file = discord.File(fp=img, filename="table.png")
-        embed.set_image(url="attachment://table.png")
-        await ctx.send(file=file, embed=embed)
+        page = Paginator(prefix='```html')
+        page.add_line(img[:1990])
+        page.add_line(img[1990:])
+        for kage in page.pages:
+            await ctx.send(kage)
+        # embed = discord.Embed()
+        # file = discord.File(fp=img, filename="table.png")
+        # embed.set_image(url="attachment://table.png")
+        # await ctx.send(file=file, embed=embed)
 
     @tasks.loop(minutes=5)
     async def remind(self):
