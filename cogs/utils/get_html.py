@@ -27,6 +27,7 @@ def get_string(elements):
     buffer = BytesIO(img)
     buffer.seek(0)
     byt = buffer.read()
+    print(img == byt)
 
     image = Image.open(BytesIO(byt))
     buff = BytesIO()
