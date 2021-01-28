@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
-from discord.ext.commands import BadArgument
+from discord.ext.commands import BadArgument, Paginator
 
 from cogs.utils.functions import hour_rounder
 from cogs.utils.get_html import get_string
@@ -102,7 +102,12 @@ class reminder(commands.Cog):
     @commands.command()
     async def html(self, ctx):
         data = [convert_record(self, record) for record in self.data]
-        await ctx.send(f'```html\n{get_string(data)}```')
+        pages = Paginator(prefix='```html')
+        string = get_string(data)
+        pages.add_line(string[:1999])
+        pages.add_line(string[1999:])
+        for page in pages.pages:
+            await ctx.send(page)
 
     @tasks.loop(minutes=5)
     async def remind(self):
