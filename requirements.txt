@@ -4,7 +4,6 @@ asyncpg==0.21.0
 attrs==20.3.0
 chardet==3.0.4
 discord==1.0.1
-discord-ext-menus==1.0.0a27+g6f2b873
 discord.py==1.5.1
 idna==2.10
 imgkit==1.0.2
