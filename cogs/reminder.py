@@ -105,8 +105,8 @@ class reminder(commands.Cog):
         data = [convert_record(self, record) for record in data]
         img = get_string(data)
         page = Paginator(prefix='```html')
-        page.add_line(img[:1990])
-        page.add_line(img[1990:])
+        page.add_line(img[:1900])
+        page.add_line(img[1900:])
         for kage in page.pages:
             await ctx.send(kage)
         # embed = discord.Embed()
