@@ -1,5 +1,5 @@
 # Riser
 Support bot made for Rise Unofficial discord server
 
-- Buldpacks used for heroku:  https://github.com/dscout/wkhtmltopdf-buildpack.git
-- wkhtmltopdf version: 0.12.4
+- Buldpacks used for heroku:  heroku/ruby and heroku/python
+- wkhtmltopdf version: 2.12.6
