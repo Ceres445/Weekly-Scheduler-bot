@@ -102,7 +102,7 @@ class reminder(commands.Cog):
     @commands.command()
     async def html(self, ctx):
         data = [convert_record(self, record) for record in self.data]
-        await ctx.send(f'```html\n{get_string}```')
+        await ctx.send(f'```html\n{get_string()}```')
 
     @tasks.loop(minutes=5)
     async def remind(self):
