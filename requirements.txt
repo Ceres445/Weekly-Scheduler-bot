@@ -4,12 +4,14 @@ asyncpg==0.21.0
 attrs==20.3.0
 chardet==3.0.4
 discord==1.0.1
+discord-ext-menus==1.0.0a27+g6f2b873
 discord.py==1.5.1
 idna==2.10
 imgkit==1.0.2
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 multidict==4.7.6
+Pillow==8.1.0
 python-dotenv==0.15.0
+tabulate==0.8.7
 yarl==1.5.1
-wkhtmltopdf-pack-ng==0.12.3.0
