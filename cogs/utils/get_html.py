@@ -26,10 +26,7 @@ def get_string(elements):
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements)), k=[range(i['span']) for i in elements.values()]), False, config=config)
     buffer = BytesIO(img)
     buffer.seek(0)
-    byt = buffer.read()
-    print(img == byt)
-
-    image = Image.open(BytesIO(byt))
+    image = Image.open(buffer)
     buff = BytesIO()
     size = image.size
     image1 = image.crop((1, 2, 350, size[1]-1))
