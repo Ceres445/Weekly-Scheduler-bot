@@ -22,10 +22,8 @@ def get_string(elements):
     with open('cogs/utils/index.html', 'r') as f:
         string = f.read()
     template = Template(string)
-    config = imgkit.config(wkhtmltoimage=WKHTMLTOPDF_CMD)
-    print(WKHTMLTOPDF_CMD)
     img = imgkit.from_string(template.render(a=elements, r=range(len(elements)),
-                                             k=[range(i['span']) for i in elements.values()]), False, config=config)
+                                             k=[range(i['span']) for i in elements.values()]), False)
     print(img[:20])
     buffer = BytesIO(img)
     buffer.seek(0)
