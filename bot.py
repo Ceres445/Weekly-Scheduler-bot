@@ -60,14 +60,14 @@ class Riser(commands.Bot):
         print(f'Successfully logged in as {self.user}\nSharded to {len(self.guilds)} guilds')
         await self.change_presence(status=discord.Status.online, activity=discord.Game(name='use the prefix "+"'))
 
-    async def on_command_error(self, context, exception):
-        if isinstance(exception, CommandNotFound):
-            await context.send('that is not a command')
-            return
-        embed = discord.Embed(title=f"{type(exception).__name__}", colour=discord.Colour.red(),
-                              description=str(exception))
-        await self.log(content=f"error from {context.message.jump_url}\n {exception}")
-        await context.send(embed=embed)
+    # async def on_command_error(self, context, exception):
+    #     if isinstance(exception, CommandNotFound):
+    #         await context.send('that is not a command')
+    #         return
+    #     embed = discord.Embed(title=f"{type(exception).__name__}", colour=discord.Colour.red(),
+    #                           description=str(exception))
+    #     await self.log(content=f"error from {context.message.jump_url}\n {exception}")
+    #     await context.send(embed=embed)
 
     @classmethod
     async def setup(cls, toke):
