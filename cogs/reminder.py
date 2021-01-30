@@ -232,7 +232,7 @@ class reminder(commands.Cog):
         await ctx.send('loaded')
 
     @commands.is_owner()
-    @commands.command()
+    @commands.command(aliases=['show'])
     async def show_all(self, ctx):
         converted = [(self.converter['day_name'][record['day']], record['subject'], record['attendees'], record['pid']) for record in self.data]
         string = tabulate(converted)
