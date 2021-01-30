@@ -8,6 +8,7 @@ from discord.ext import tasks
 from datetime import datetime
 
 from discord.ext.commands import BadArgument
+from tabulate import tabulate
 
 from cogs.utils.functions import hour_rounder
 from cogs.utils.get_html import get_string
@@ -229,6 +230,13 @@ class reminder(commands.Cog):
     async def reload(self, ctx):
         self.data = await self.bot.db.get_data()
         await ctx.send('loaded')
+
+    @commands.is_owner()
+    @commands.command()
+    async def show_all(self, ctx):
+        converted = [(self.converter['day_name'][record['day']], record['subject'], record['attendees'], record['pid']) for record in self.data]
+        string = tabulate(converted)
+        await ctx.send(f'```prolog\n{string}\n```')
 
     @commands.command()
     async def today(self, ctx, attendee: str = None):
