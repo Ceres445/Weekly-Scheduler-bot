@@ -99,28 +99,62 @@ class reminder(commands.Cog):
         self.data = None
         self.remind.start()
 
-    @commands.command()
-    async def html(self, ctx):
+    async def send_html(self, ctx, day):
         data = sorted(self.data, key=lambda x: (x['day'], x['time']))
-        new = {}
-        for day in range(6):
-            today = [record for record in data if record['day'] == day]
-            new[day] = {
-                "span": len(today),
-                "day": self.converter['day_name'][day],
-                "subjects": [self.converter['subjects'][record['subject']] for record in today],
-                "times": [record['time'] for record in today],
-            }
+        today = [record for record in data if record['day'] == day]
+        new = {
+            "span": len(today),
+            "day": self.converter['day_name'][day],
+            "subjects": self.get_subjects(today),
+            "times": [record['time'] for record in today],
+        }
         img = get_string(new)
-        # page = Paginator(prefix='```html')
-        # page.add_line(img[:1900])
-        # page.add_line(img[1900:])
-        # for kage in page.pages:
-        #     await ctx.send(kage)
         embed = discord.Embed()
         file = discord.File(fp=img, filename="table.png")
         embed.set_image(url="attachment://table.png")
         await ctx.send(file=file, embed=embed)
+
+    @commands.group(aliases=['table'], invoke_without_command=True)
+    async def tt(self, ctx, args: str = None):
+        if args is None:
+            data = sorted(self.data, key=lambda x: (x['day'], x['time']))
+            new = {}
+            for day in range(7):
+                today = [record for record in data if record['day'] == day]
+                new[day] = {
+                    "span": len(today),
+                    "day": self.converter['day_name'][day],
+                    "subjects": self.get_subjects(today),
+                    "times": [record['time'] for record in today],
+                }
+            img = get_string(new)
+            embed = discord.Embed()
+            file = discord.File(fp=img, filename="table.png")
+            embed.set_image(url="attachment://table.png")
+            await ctx.send(file=file, embed=embed)
+        else:
+            if args.lower() == 'today':
+                day = datetime.now().weekday()
+            elif args.lower() in ('tmr', 'tomorrow'):
+                if datetime.now().weekday() == 6:
+                    day = 0
+                else:
+                    day = datetime.now().weekday() +1
+            elif args.capitalize()[:3] in [a[:3] for a in self.converter['day_name']]:
+                day = [a[:3] for a in self.converter['day_name']].index(args.capitalize()[:3])
+            else:
+                raise BadArgument
+            await self.send_html(ctx, day)
+
+    def get_subjects(self, records):
+        a = []
+        for record in records:
+            if record['attendees'] == 'crp':
+                a.append(self.converter['subjects'][record['subject']] + "(CRP)")
+            else:
+                a.append(self.converter['subjects'][record['subject']])
+        return a
+
 
     @tasks.loop(minutes=5)
     async def remind(self):

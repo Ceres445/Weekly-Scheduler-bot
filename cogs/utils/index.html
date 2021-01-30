@@ -26,9 +26,10 @@ table, th, td {
     </tr>
     <tr>
           <th class="day">Day</th>
-          <th class="day">Time</th>
           <th class="day">Subject</th>
+          <th class="day">Time</th>
     </tr>
+    {% if day == 1 %}
     {% for i in r %}
     {% for j in k[i] %}
     <tr>
@@ -41,6 +42,18 @@ table, th, td {
     </tr>
     {% endfor %}
     {% endfor %}
+    {% else %}
+    {% for j in k %}
+    <tr>
+        {% if j == 0 %}
+        <td rowspan={{a['span']}}>{{a['day']}}</td>
+        {% endif %}
+        <td>{{a['subjects'][j]}}</td>
+        <td>{{a['times'][j]}}</td>
+
+    </tr>
+    {% endfor %}
+    {% endif %}
 </table>
 </body>
 </html>

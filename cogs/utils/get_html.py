@@ -22,15 +22,22 @@ def get_string(elements):
     with open('cogs/utils/index.html', 'r') as f:
         string = f.read()
     template = Template(string)
-    img = imgkit.from_string(template.render(a=elements, r=range(len(elements)),
-                                             k=[range(i['span']) for i in elements.values()]), False)
-    print(img[:20])
+    if elements.get('span', None) is not None:
+        r = None
+        day = 0
+        k = range(elements['span'])
+    else:
+        r = range(len(elements))
+        day = 1
+        k = [range(i['span']) for i in elements.values()]
+    img = imgkit.from_string(template.render(a=elements, r=r,
+                                             k=k, day=day), False)
     buffer = BytesIO(img)
     buffer.seek(0)
     image = Image.open(buffer)
     buff = BytesIO()
     size = image.size
-    image1 = image.crop((1, 2, 350, size[1]-1))
+    image1 = image.crop((1, 2, 300, size[1]-1))
     image1.save(buff, 'png')
     buff.seek(0)
     return buff
