@@ -30,8 +30,9 @@ def get_string(elements):
         r = range(len(elements))
         day = 1
         k = [range(i['span']) for i in elements.values()]
+    config = imgkit.config(wkhtmltoimage="/app/bin/wkhtmltoimage")
     img = imgkit.from_string(template.render(a=elements, r=r,
-                                             k=k, day=day), False)
+                                             k=k, day=day), False, config=config)
     buffer = BytesIO(img)
     buffer.seek(0)
     image = Image.open(buffer)
