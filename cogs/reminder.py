@@ -7,7 +7,7 @@ from discord.ext import commands
 from discord.ext import tasks
 from datetime import datetime
 
-from discord.ext.commands import BadArgument, Paginator
+from discord.ext.commands import BadArgument
 
 from cogs.utils.functions import hour_rounder
 from cogs.utils.get_html import get_string
@@ -139,7 +139,7 @@ class reminder(commands.Cog):
                 if datetime.now().weekday() == 6:
                     day = 0
                 else:
-                    day = datetime.now().weekday() +1
+                    day = datetime.now().weekday() + 1
             elif args.capitalize()[:3] in [a[:3] for a in self.converter['day_name']]:
                 day = [a[:3] for a in self.converter['day_name']].index(args.capitalize()[:3])
             else:
@@ -154,7 +154,6 @@ class reminder(commands.Cog):
             else:
                 a.append(self.converter['subjects'][record['subject']])
         return a
-
 
     @tasks.loop(minutes=5)
     async def remind(self):
