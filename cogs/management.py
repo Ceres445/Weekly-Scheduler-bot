@@ -18,7 +18,7 @@ class Manager(commands.Cog):
     @commands.command(aliases=['show'])
     async def show_all(self, ctx):
         """shows all entries in db"""
-        self.data = self.bot.db.get_data()
+        self.data = await self.bot.db.get_data()
         converted = [(self.converter['day_name'][record['day']], record['subject'], record['time'], record['attendees'],
                       record['pid']) for record in self.data]
         string = tabulate(converted)
