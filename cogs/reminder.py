@@ -243,14 +243,6 @@ class reminder(commands.Cog):
         self.data = await self.bot.db.get_data()
         await ctx.send('loaded')
 
-    @commands.is_owner()
-    @commands.command(aliases=['show'])
-    async def show_all(self, ctx):
-        converted = [(self.converter['day_name'][record['day']], record['subject'], record['attendees'], record['pid'])
-                     for record in self.data]
-        string = tabulate(converted)
-        await ctx.send(f'```prolog\n{string}\n```')
-
     @commands.command()
     async def today(self, ctx, attendee: str = None):
         """Shows the classes that are happening today"""
