@@ -163,10 +163,22 @@ class reminder(commands.Cog):
         print(time, day, "is the time and day")
         if [day, time] in [[x['day'], x['time']] for x in self.data]:
             record = self.data[[[x['day'], x['time']] for x in self.data].index([day, time])]
-            await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
-                                    embed=discord.Embed().from_dict(self.embeds[record['subject']]))
             if not record['permanant']:
-                await self.bot.db.delete(record)
+                if record['switch'] == 0:
+                    await self.channel.send("Class was cancelled today")
+                    await self.bot.db.execute("UPDATE time_data set permanant=true WHERE pid = $1", record['pid'])
+                else:
+                    record_new = await self.bot.db.fetchrow("SELECT * FROM time_data WHERE pid = $1", record['switch'])
+                    await self.channel.send(content=f"<@&{self.embeds['roles'][record_new['attendees']]}>",
+                                            embed=discord.Embed().from_dict(
+                                                self.embeds[record_new['subject']]))
+                    await self.bot.execute("UPDATE time_data set permanant = true, switch = 0 WHERE pid = $1",
+                                           record['pid'])
+            else:
+                await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
+                                        embed=discord.Embed().from_dict(
+                                            self.embeds[record['subject']]))
+
         else:
             print("check failed")
 
@@ -234,7 +246,8 @@ class reminder(commands.Cog):
     @commands.is_owner()
     @commands.command(aliases=['show'])
     async def show_all(self, ctx):
-        converted = [(self.converter['day_name'][record['day']], record['subject'], record['attendees'], record['pid']) for record in self.data]
+        converted = [(self.converter['day_name'][record['day']], record['subject'], record['attendees'], record['pid'])
+                     for record in self.data]
         string = tabulate(converted)
         await ctx.send(f'```prolog\n{string}\n```')
 
