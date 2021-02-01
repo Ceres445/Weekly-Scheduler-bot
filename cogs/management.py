@@ -7,8 +7,8 @@ from tabulate import tabulate
 class Manager(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("cogs/json_files/embeds.json", "r") as f, \
-                open("cogs/json_files/time.json", "r") as f2:
+        with open("json_files/embeds.json", "r") as f, \
+                open("json_files/time.json", "r") as f2:
             self.embeds = json.load(f)
             self.converter = json.load(f2)
             self.links = self.converter['links']
