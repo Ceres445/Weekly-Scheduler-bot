@@ -27,6 +27,8 @@ def convert_record(self, record):
             else:
                 record[key] = "CRP"
     record.pop('permanant')
+    record.pop('pid'    )
+    record.pop('pwitch')
     return record
 
 
