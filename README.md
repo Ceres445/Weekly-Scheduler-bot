@@ -1,4 +1,5 @@
 # Weekly-Scheduler-Bot
+# WARNING: The environment variables and entries in DB haven't been setup and you have to manually configure to get a working discord bot. Reach me on discord Ceres#9663
 Public build of the support bot made for Rise Unofficial discord server
 
 - Buldpacks used for heroku:  
