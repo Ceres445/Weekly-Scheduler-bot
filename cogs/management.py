@@ -14,6 +14,23 @@ class Manager(commands.Cog):
             self.links = self.converter['links']
             self.data = None
 
+    @commands.Cog.listener('on_ready')
+    async def foo(self):
+        await self.bot.remove_command('order')
+
+    @commands.is_owner()
+    @commands.command()
+    async def order(self, ctx):
+        """Temp command to reset database with usable pid"""
+        data = await self.bot.db.get_data()
+        data = sorted(data, key=lambda x: (x['day'], x['time']))
+        await self.bot.db.execute("DELETE FROM time_data")
+        await self.bot.db.execute("ALTER SEQUENCE time_data_pid_seq RESTART WITH 1")
+        for record in data:
+            await self.bot.db.execute("INSERT INTO time_data (day, time, subject, attendees) VALUES ($1, $2, $3, $4)",
+                                      record['day'], record['time'], record['subject'], record['attendees'])
+            await ctx.send(f"added {str(record['day']) + record['time'] + record['subject'] + record['attendees']}")
+
     @commands.is_owner()
     @commands.command(aliases=['show'])
     async def show_all(self, ctx):
@@ -34,23 +51,25 @@ class Manager(commands.Cog):
         await ctx.send('that is not valid pid')
 
     @commands.command()
-    async def switch(self, ctx, pid1, pid2, perm: bool = False):
+    async def switch(self, ctx, pid1: int, pid2: int, perm: bool = False):
         pids = await self.bot.db.fetch("SELECT DISTINCT pid FROM time_data")
+        pids = [code['pid'] for code in pids]
         if pid1 in pids and pid2 in pids:
             if not perm:
-                await self.bot.db.execute("UPDATE time_data set permanant = false, switch = $2 WHERE pid = $1", pid1, pid2)
-                await self.bot.db.execute("UPDATE time_data set permanant = false, switch = $2 WHERE pid = $1", pid2, pid1)
+                await self.bot.db.execute("UPDATE time_data set permanant = false, switch = $2 WHERE pid = $1",
+                                          pid1, pid2)
+                await self.bot.db.execute("UPDATE time_data set permanant = false, switch = $2 WHERE pid = $1",
+                                          pid2, pid1)
                 await ctx.send('switched for one day')
                 reminder = self.bot.get_cog('reminder')
                 await reminder.reload(ctx)
                 return
             else:
                 records = await self.bot.db.fetch("SELECT * FROM time_data WHERE pid=$1 or pid = $2", pid1, pid2)
-                records[0]['subject'], records[1]['subject'] = records[1]['subject'], records[0]['subject']
-
-                await self.bot.db.execute("UPDATE time_data set subject = $1 WHERE pid = $2", records[0]['subject'],
+                print(records[1]['subject'], pid1)
+                await self.bot.db.execute("UPDATE time_data set subject = $1 WHERE pid = $2", records[1]['subject'],
                                           pid1)
-                self.bot.db.execute("UPDATE time_data set subject = $1 WHERE pid = $2", records[1]['subject'],
+                await self.bot.db.execute("UPDATE time_data set subject = $1 WHERE pid = $2", records[0]['subject'],
                                           pid2)
                 reminder = self.bot.get_cog('reminder')
                 await reminder.reload(ctx)
