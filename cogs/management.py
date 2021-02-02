@@ -21,7 +21,8 @@ class Manager(commands.Cog):
     @commands.is_owner()
     @commands.command()
     async def order(self, ctx):
-        """Temp command to reset database with usable pid"""
+        """Temp command to reset database with usable pid\n Warning dont use without understanding"""
+
         data = await self.bot.db.get_data()
         data = sorted(data, key=lambda x: (x['day'], x['time']))
         await self.bot.db.execute("DELETE FROM time_data")
@@ -43,6 +44,7 @@ class Manager(commands.Cog):
 
     @commands.command(aliases=['delete'])
     async def remove(self, ctx, pid):
+        """permanently removes a class"""
         pids = await self.bot.db.fetch("SELECT DISTINCT pid FROM time_data")
         if pid in pids:
             await self.bot.db.execute("DELETE FROM time_data WHERE pid=$1", pid)
@@ -52,6 +54,7 @@ class Manager(commands.Cog):
 
     @commands.command()
     async def switch(self, ctx, pid1: int, pid2: int, perm: bool = False):
+        """switches subjects of two classes"""
         pids = await self.bot.db.fetch("SELECT DISTINCT pid FROM time_data")
         pids = [code['pid'] for code in pids]
         if pid1 in pids and pid2 in pids:
