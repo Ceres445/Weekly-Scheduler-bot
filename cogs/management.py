@@ -16,7 +16,7 @@ class Manager(commands.Cog):
 
     @commands.Cog.listener('on_ready')
     async def foo(self):
-        await self.bot.remove_command('order')
+        self.bot.remove_command('order')
 
     @commands.is_owner()
     @commands.command()
