@@ -80,6 +80,7 @@ class Manager(commands.Cog):
     async def cancel(self, ctx, pid):
         """cancels a class once"""
         pids = await self.bot.db.fetch("SELECT DISTINCT pid FROM time_data")
+        pids = [pid['pid'] for pid in pids]
         if pid in pids:
             await self.bot.db.execute("UPDATE time_data set permanant = false WHERE pid = $1", pid)
             await ctx.send('cancelled')
