@@ -14,6 +14,7 @@ class Database(object):
     @classmethod
     async def create_pool(cls, bot, uri=None, *, min_connections=10, max_connections=10,
                           timeout=60.0, loop=None, **kwargs):
+        print(uri)
         pool = await asyncpg.create_pool(uri, min_size=min_connections, max_size=max_connections, **kwargs)
         self = cls(bot=bot, pool=pool, loop=loop, timeout=timeout)
         print('Established db pool with {} - {} connections'.format(min_connections, max_connections))
