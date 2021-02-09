@@ -174,7 +174,7 @@ class reminder(commands.Cog):
                     await self.channel.send(content=f"<@&{self.embeds['roles'][record_new['attendees']]}>",
                                             embed=discord.Embed().from_dict(
                                                 self.embeds[record_new['subject']]))
-                    await self.bot.execute("UPDATE time_data set permanant = true, switch = 0 WHERE pid = $1",
+                    await self.bot.db.execute("UPDATE time_data set permanant = true, switch = 0 WHERE pid = $1",
                                            record['pid'])
             else:
                 await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
