@@ -188,7 +188,7 @@ class reminder(commands.Cog):
     async def before_remind(self):
         await self.bot.wait_until_ready()
         await asyncio.sleep(3)
-        self.channel = self.bot.guild.get_channel(698792545760706590)
+        self.channel = self.bot.guild.get_channel(int(self.bot.announcement))
         await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}.")
         self.data = await self.bot.db.get_data()
         await asyncio.sleep(hour_rounder())

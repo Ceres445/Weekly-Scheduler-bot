@@ -1,0 +1,6 @@
+POSTGRES="postgres://nejunesztxrqdw:4ebccd38c188aaaab085d6180102fc5399789c92be968fbc96491d7ff011b6d0@ec2-52-44-139-108.compute-1.amazonaws.com:5432/d9qt7tf1liu2p3?sslmode=require"
+token="discord token from https://discord.com/developers/docs"
+guild=guild_id
+log_channel=channel_id
+announcement=channel_id
+POSTGRES="postgresql://other@localhost/otherdb?connect_timeout=10&application_name=myapp" from https://stackoverflow.com/questions/3582552/postgresql-connection-url
