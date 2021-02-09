@@ -8,7 +8,6 @@ from discord.ext import tasks
 from datetime import datetime
 
 from discord.ext.commands import BadArgument
-from tabulate import tabulate
 
 from cogs.utils.functions import hour_rounder
 from cogs.utils.get_html import get_string
@@ -90,7 +89,7 @@ def get_attendee(roles):
         raise NotStudent("You must have Integrated or CRP role to use this command")
 
 
-class reminder(commands.Cog):
+class Reminder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         with open("cogs/json_files/embeds.json", "r") as f, \
@@ -175,7 +174,7 @@ class reminder(commands.Cog):
                                             embed=discord.Embed().from_dict(
                                                 self.embeds[record_new['subject']]))
                     await self.bot.db.execute("UPDATE time_data set permanant = true, switch = 0 WHERE pid = $1",
-                                           record['pid'])
+                                              record['pid'])
             else:
                 await self.channel.send(content=f"<@&{self.embeds['roles'][record['attendees']]}>",
                                         embed=discord.Embed().from_dict(
@@ -188,7 +187,7 @@ class reminder(commands.Cog):
     async def before_remind(self):
         await self.bot.wait_until_ready()
         await asyncio.sleep(3)
-        self.channel = self.bot.guild.get_channel(int(self.bot.announcement))
+        self.channel = self.bot.guild.get_channel(698792545760706590)
         await self.bot.log(content=f"time is {datetime.now().strftime('%H:%M')}.")
         self.data = await self.bot.db.get_data()
         await asyncio.sleep(hour_rounder())
@@ -293,4 +292,4 @@ class reminder(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(reminder(bot))
+    bot.add_cog(Reminder(bot))
