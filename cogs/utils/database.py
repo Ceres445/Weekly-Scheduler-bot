@@ -45,3 +45,9 @@ class Database(object):
     async def delete(self, record):
         query = "DELETE FROM time_data WHERE day=$1 AND time=$2"
         await self.execute(query, record['day'], record['time'])
+
+    async def get_test_data(self):
+        return await self.fetch("SELECT * FROM test_data")
+
+    async def remove_test(self, record):
+        return await self.execute("DELETE FROM test_data WHERE pid=$1", record['pid'])

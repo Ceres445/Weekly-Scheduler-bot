@@ -14,6 +14,7 @@ from cogs.utils.functions import hour_rounder
 
 
 def get_pings(attendees: str):
+    print("Warning roles have not been configured")
     if attendees == 'int':
         return f"<@&815982951946125363>"
     elif attendees == 'crp':
