@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.1
--- Dumped by pg_dump version 13.1
+-- Dumped from database version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,6 +19,42 @@ SET row_security = off;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: test_data; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.test_data (
+    pid integer NOT NULL,
+    date date NOT NULL,
+    subject character varying,
+    attendees character varying
+);
+
+
+ALTER TABLE public.test_data OWNER TO postgres;
+
+--
+-- Name: test_data_pid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.test_data_pid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.test_data_pid_seq OWNER TO postgres;
+
+--
+-- Name: test_data_pid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.test_data_pid_seq OWNED BY public.test_data.pid;
+
 
 --
 -- Name: time_data; Type: TABLE; Schema: public; Owner: postgres
@@ -60,10 +96,25 @@ ALTER SEQUENCE public.time_data_pid_seq OWNED BY public.time_data.pid;
 
 
 --
+-- Name: test_data pid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.test_data ALTER COLUMN pid SET DEFAULT nextval('public.test_data_pid_seq'::regclass);
+
+
+--
 -- Name: time_data pid; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.time_data ALTER COLUMN pid SET DEFAULT nextval('public.time_data_pid_seq'::regclass);
+
+
+--
+-- Data for Name: test_data; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.test_data (pid, date, subject, attendees) FROM stdin;
+\.
 
 
 --
@@ -75,10 +126,25 @@ COPY public.time_data (day, "time", subject, attendees, permanant, pid, switch) 
 
 
 --
+-- Name: test_data_pid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.test_data_pid_seq', 5, true);
+
+
+--
 -- Name: time_data_pid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.time_data_pid_seq', 22, true);
+SELECT pg_catalog.setval('public.time_data_pid_seq', 33, true);
+
+
+--
+-- Name: test_data test_data_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.test_data
+    ADD CONSTRAINT test_data_pk PRIMARY KEY (pid);
 
 
 --
@@ -87,6 +153,13 @@ SELECT pg_catalog.setval('public.time_data_pid_seq', 22, true);
 
 ALTER TABLE ONLY public.time_data
     ADD CONSTRAINT time_data_pk PRIMARY KEY (pid);
+
+
+--
+-- Name: test_data_pid_uindex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX test_data_pid_uindex ON public.test_data USING btree (pid);
 
 
 --
