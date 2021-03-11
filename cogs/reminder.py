@@ -99,7 +99,6 @@ class Reminder(commands.Cog):
             self.links = self.converter['links']
         self.channel = None
         self.data = None
-        self.remind.start()
 
     async def send_html(self, ctx, day):
         data = sorted(self.data, key=lambda x: (x['day'], x['time']))
@@ -183,6 +182,12 @@ class Reminder(commands.Cog):
         else:
             print("check failed")
 
+    @commands.is_owner()
+    @commands.command()
+    async def start_remind(self, ctx):
+        self.remind.start()
+        await ctx.send('started remind')
+
     @remind.before_loop
     async def before_remind(self):
         await self.bot.wait_until_ready()
@@ -240,9 +245,10 @@ class Reminder(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def reload(self, ctx):
+    async def reload(self, ctx=None):
         self.data = await self.bot.db.get_data()
-        await ctx.send('loaded')
+        if ctx is not None:
+            await ctx.send('loaded')
 
     @commands.command()
     async def today(self, ctx, attendee: str = None):
@@ -289,6 +295,17 @@ class Reminder(commands.Cog):
         except KeyError:
             await ctx.send(f'<@339365580496830466> {ctx.author.mention} that is not a valid subject use '
                            f'+help embed for info')
+
+    @commands.is_owner()
+    @commands.command()
+    async def stop_remind(self, ctx):
+        # TODO: make toggle
+        self.remind.cancel()
+        await ctx.send('stopped posting')
+
+    async def cog_before_invoke(self, ctx):
+        await self.bot.wait_until_ready()
+        await self.reload()
 
 
 def setup(bot):
