@@ -157,7 +157,7 @@ class Reminder(commands.Cog):
         return a
 
     @tasks.loop(minutes=5)
-    async def remind(self):
+    async def reminder(self):
         time = datetime.now().strftime('%H:%M')
         day = datetime.now().weekday()
         print(time, day, "is the time and day")
@@ -184,11 +184,27 @@ class Reminder(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def start_remind(self, ctx):
-        self.remind.start()
-        await ctx.send('started remind')
+    async def remind(self, ctx, *, args: bool = None):
+        """Shows info and allows you to modify the reminder task for classes"""
+        running = self.reminder.is_running()
+        if args is None:
+            if running:
+                await ctx.send('reminder task is up and running')
+            else:
+                await ctx.send('reminder task has not been started')
+        else:
+            if args:
+                if not running:
+                    await self.reminder.start()
+                else:
+                    await ctx.send('task is already running')
+            else:
+                if running:
+                    self.reminder.cancel()
+                else:
+                    await ctx.send('reminder task has not been started')
 
-    @remind.before_loop
+    @reminder.before_loop
     async def before_remind(self):
         await self.bot.wait_until_ready()
         await asyncio.sleep(3)
@@ -295,17 +311,6 @@ class Reminder(commands.Cog):
         except KeyError:
             await ctx.send(f'<@339365580496830466> {ctx.author.mention} that is not a valid subject use '
                            f'+help embed for info')
-
-    @commands.is_owner()
-    @commands.command()
-    async def stop_remind(self, ctx):
-        # TODO: make toggle
-        self.remind.cancel()
-        await ctx.send('stopped posting')
-
-    async def cog_before_invoke(self, ctx):
-        await self.bot.wait_until_ready()
-        await self.reload()
 
 
 def setup(bot):
