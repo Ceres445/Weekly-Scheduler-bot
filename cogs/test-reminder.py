@@ -7,45 +7,10 @@ import discord
 from discord.ext import commands
 from discord.ext import tasks
 from discord.ext.commands import BadArgument
-from tabulate import tabulate
 
 from cogs.reminder import get_attendee
-from cogs.utils.functions import hour_rounder
-
-
-def get_pings(attendees: str):
-    print("Warning roles have not been configured")
-    if attendees == 'int':
-        return f"<@&815982951946125363>"
-    elif attendees == 'crp':
-        return f"<@&698791878421774397>"
-    else:
-        return f"<@&815982951946125363>" + f"<@&698791878421774397>"
-
-
-def get_attendee_name(param):
-    if param == 'int':
-        return 'Integrated'
-    elif param == 'crp':
-        return "CRP"
-    else:
-        return param
-
-
-def get_name(a):
-    if a == 1:
-        return 'today'
-    elif a == 2:
-        return 'in five days'
-    else:
-        return 'in two days'
-
-
-def get_days(date: datetime.date):
-    if date == datetime.now().date():
-        return 'today'
-    else:
-        return f'in {(date - datetime.now().date()).days} days'
+from cogs.utils.functions import hour_rounder, get_pings, get_attendee_name, get_name, get_days
+from cogs.utils.menu import ExamMenu
 
 
 class Tests(commands.Cog):
@@ -63,15 +28,15 @@ class Tests(commands.Cog):
     @tasks.loop(minutes=60 * 24)
     async def remind_test(self):
         print('test loop started')
+        await self.exam_reload()
         today = datetime.now().date(), 1
         five_day = (datetime.now() + timedelta(days=5)).date(), 2
         two_day = (datetime.now() + timedelta(days=2)).date(), 3
-        for a in [today, five_day, two_day]:
-            if a[0] in [x['date'] for x in self.test_data]:
-                record = self.test_data[[x['date'] for x in self.test_data].index(a[0])]
+        for a, delta in ([today, five_day, two_day], [0, 5, 2]):
+            for record in [x for x in self.test_data if x['data'] - timedelta(days=delta)]:
                 await self.channel.send(get_pings(record['attendees']), embed=self.test_embed(record, get_name(a[1])))
-                await self.bot.db.remove_test(record)
-                await self.remind_test()
+                if delta == 0:
+                    await self.bot.db.remove_test(record)
 
     @remind_test.before_loop
     async def before_remind_test(self):
@@ -80,18 +45,22 @@ class Tests(commands.Cog):
         self.channel = self.bot.guild.get_channel(698792545760706590)
         await self.bot.log(content=f"test cogs loop started.")
         self.test_data = await self.bot.db.get_test_data()
-        await asyncio.sleep(hour_rounder(day=True))
+        # await asyncio.sleep(hour_rounder(day=True))
 
     @commands.group(invoke_without_command=True, aliases=['test'])
-    async def exam(self, ctx):
+    async def exam(self, ctx, pid=None):
         """Shows test info"""
         if self.test_data is None:
             await self.exam_reload(ctx)
-        converted = [(record['pid'], record['subject'], record['date'],
-                      get_attendee_name(record['attendees'])) for record in self.test_data]
-
-        string = tabulate(converted)
-        await ctx.send(f'```prolog\n{string}\n```')
+        if pid is None:
+            menu = ExamMenu(self.test_data)
+            await menu.start(ctx)
+        else:
+            record = await self.bot.db.fetchrow("SELECT * FROM test_data WHERE pid=$1", int(pid))
+            if record is None:
+                await ctx.send('incorrect pid')
+                return
+            await ctx.send(embed=self.test_embed(record, get_days(record['date'])))
 
     @exam.command(name='next')
     async def exam_next(self, ctx, attendee: str = None):
@@ -115,21 +84,53 @@ class Tests(commands.Cog):
         if not state:
             await ctx.send("no test scheduled")
 
+    @exam.command()
+    async def add(self, ctx, date, subject, attendees: str = 'all'):
+        date = datetime.strptime(date, '%Y-%m-%d')
+        await self.bot.db.execute("INSERT INTO test_data (date, subject, attendees) VALUES ($1, $2, $3)", date, subject,
+                                  attendees)
+        await ctx.send('added to database')
+
+    @commands.is_owner()
+    @exam.command()
+    async def remove(self, ctx, pid):
+        await self.bot.db.execute("DELETE FROM test_data WHERE pid=$1", int(pid))
+        await ctx.send('removed test')
+
+    @exam.command()
+    async def data(self, ctx, pid, key, *, value):
+        record = await self.bot.db.fetchrow("SELECT * FROM test_data WHERE pid = $1", int(pid))
+        if record is None:
+            await ctx.send('test pid doesnt exist')
+            return
+        else:
+            await self.bot.db.execute("UPDATE test_data set data=$1 WHERE pid=$2", json.dumps({key: value}), int(pid))
+            await ctx.send('updated database')
+
     @commands.is_owner()
     @exam.command(name='reload')
-    async def exam_reload(self, ctx):
+    async def exam_reload(self, ctx=None):
         self.test_data = await self.bot.db.get_test_data()
-        await ctx.send('loaded')
+        if ctx is not None:
+            await ctx.send('loaded test data')
 
     def test_embed(self, record, desc):
+
         if desc == 'today':
             color = discord.Color.red()
         else:
             color = discord.Embed.Empty
-        embed = discord.Embed(title=f"Test {desc}", description=f"Test in {self.converter['subjects'][record['subject']]} for"
-                                                                f" {get_attendee_name(record['attendees'])} students",
+        embed = discord.Embed(title=f"Test {desc}",
+                              description=f"Test in {self.converter['subjects'][record['subject']]} for"
+                                          f" {get_attendee_name(record['attendees'])} students",
                               color=color)
         embed.add_field(name="Test Date", value=record['date'])
+        print(record['data'])
+        if record['data'] is not None:
+            data = json.loads(record['data'])
+            for key, value in data.items():
+                embed.add_field(name=key, value=value.replace('\\n', '\n'), inline=False)
+        embed.set_footer(text='Use `+test` for more info')
         return embed
 
 
